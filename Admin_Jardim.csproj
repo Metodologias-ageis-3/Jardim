@@ -49,6 +49,7 @@
     <Compile Include="Jardim.cs" />
     <Compile Include="MenuCanteiro.cs" />
     <Compile Include="MenuJardim.cs" />
+    <Compile Include="MenuSelecionar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

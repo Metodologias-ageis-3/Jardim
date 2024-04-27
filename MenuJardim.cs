@@ -24,6 +24,8 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Listar");
                 Console.WriteLine("2. Adicionar");
+                Console.WriteLine("3. Editar");
+                Console.WriteLine("4. Deletar");
                 Console.WriteLine("5. Retornar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
@@ -35,6 +37,12 @@ namespace Admin_Jardim
                         break;
                     case 2:
                         Adicionar();
+                        break;
+                    case 3:
+                        Editar();
+                        break;
+                    case 4:
+                        Deletar();
                         break;
                     case 5:
                         return true;
@@ -91,6 +99,19 @@ namespace Admin_Jardim
 
             jardins.Add(jardim);
             Console.WriteLine("Jardim adicionado com sucesso!");
+        }
+
+        private void Editar()
+        {
+
+        }
+
+        private void Deletar()
+        {
+            int escolha = new MenuSelecionar<Jardim>(jardins, j => j.Nome, "jardim").Main();
+
+            jardins.RemoveAt(escolha);
+            Console.WriteLine("Jardim removido com sucesso!");
         }
     }
 }
