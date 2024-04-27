@@ -6,26 +6,19 @@ using System.Threading.Tasks;
 
 namespace Admin_Jardim
 {
-    internal class Canteiro
+    public class Canteiro
     {
-        private int id;
+        private string id;
         private string localizacao;
         private int jardimId;
         private string composicaoCanteiro;
         private float area;
         private float areaSemeada;
-        private Arvore arvore;
 
-        public int Id
+        public string Id
         {
             get { return id; }
-            set
-            {
-                if (value <= 0)
-                    throw new ArgumentException("O ID do canteiro deve ser um número positivo.");
-
-                id = value;
-            }
+            set { id = value; }
         }
 
         public string Localizacao
@@ -77,17 +70,7 @@ namespace Admin_Jardim
             set { areaSemeada = value; }
         }
 
-        public Arvore Arvore
-        {
-            get { return arvore; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentException("A árvore do canteiro não pode estar vazia.");
-
-                arvore = value;
-            }
-        }
+        
     }
 
 }

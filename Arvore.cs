@@ -16,7 +16,6 @@ namespace Admin_Jardim
         private string localizacao;
         private List<string> historicoTratamentos;
         private string condicaoSaude;
-        private Jardim jardim;
         private int jardimId;
         private int canteiroId;
         private string notasAdicionais;
@@ -118,18 +117,6 @@ namespace Admin_Jardim
         {
             get { return condicaoSaude; }
             set { condicaoSaude = value; }
-        }
-
-        public Jardim Jardim
-        {
-            get { return jardim; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentException("O jardim da árvore não pode estar vazio.");
-
-                jardim = value;
-            }
         }
 
         public int JardimId
