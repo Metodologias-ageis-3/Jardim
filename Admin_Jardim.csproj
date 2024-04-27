@@ -47,6 +47,7 @@
     <Compile Include="Canteiro.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Jardim.cs" />
+    <Compile Include="MenuCampo.cs" />
     <Compile Include="MenuCanteiro.cs" />
     <Compile Include="MenuJardim.cs" />
     <Compile Include="MenuSelecionar.cs" />

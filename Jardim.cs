@@ -12,7 +12,7 @@ namespace Admin_Jardim
         private string nome;
         private string localizacao = "";
         private string descricao = "";
-        private double area = -1;
+        private double area = 0;
         private string topografia = "";
         private string equipaResponsavel = "";
         private string caracteristicasCanteiros = "";
@@ -67,7 +67,7 @@ namespace Admin_Jardim
             get { return area; }
             set
             {
-                if (value <= 0)
+                if (value < 0)
                     throw new ArgumentException("A área do jardim deve ser um número positivo.");
 
                 area = value;

@@ -64,30 +64,39 @@ namespace Admin_Jardim
 
         private void Adicionar() 
         {
-            Console.Write("Nome: ");
-            string nome = Console.ReadLine();
+            jardins.Add(LerJardim());
+            Console.WriteLine("Jardim adicionado com sucesso!");
+        }
 
-            Console.Write("Localização: ");
-            string localizacao = Console.ReadLine();
+        private void Editar()
+        {
+            int escolha = new MenuSelecionar<Jardim>(jardins, j => j.Nome, "jardim").Main();
 
-            Console.Write("Descrição: ");
-            string descricao = Console.ReadLine();
+            jardins[escolha] = LerJardim(jardins[escolha]);
+            Console.WriteLine("Jardim editado com sucesso!");
+        }
 
-            Console.Write("Área: ");
-            double area = double.Parse(Console.ReadLine());
+        private void Deletar()
+        {
+            int escolha = new MenuSelecionar<Jardim>(jardins, j => j.Nome, "jardim").Main();
 
-            Console.Write("Topografia: ");
-            string topografia = Console.ReadLine();
+            jardins.RemoveAt(escolha);
+            Console.WriteLine("Jardim removido com sucesso!");
+        }
 
-            Console.Write("Equipa Responsável: ");
-            string equipaResponsavel = Console.ReadLine();
-
-            Console.Write("Características Canteiros: ");
-            string caracteristicaCanteiros = Console.ReadLine();
+        private Jardim LerJardim(Jardim jardimInicial = null)
+        {
+            string nome = new MenuCampo<Jardim>("Nome", j => j.Nome, jardimInicial).Main();
+            string localizacao = new MenuCampo<Jardim>("Localização", j => j.Localizacao, jardimInicial).Main();
+            string descricao = new MenuCampo<Jardim>("Descrição", j => j.Descricao, jardimInicial).Main();
+            double area = double.Parse(new MenuCampo<Jardim>("Área", j => j.Area.ToString(), jardimInicial).Main());
+            string topografia = new MenuCampo<Jardim>("Topografia", j => j.Topografia, jardimInicial).Main(); ;
+            string equipaResponsavel = new MenuCampo<Jardim>("Equipa Responsável", j => j.EquipaResponsavel, jardimInicial).Main(); ;
+            string caracteristicaCanteiros = new MenuCampo<Jardim>("Característica Canteiros", j => j.CaracteristicasCanteiros, jardimInicial).Main(); ;
 
             Jardim jardim = new Jardim
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = jardimInicial != null ? jardimInicial.Id : Guid.NewGuid().ToString(),
                 Nome = nome,
                 Localizacao = localizacao,
                 Descricao = descricao,
@@ -97,21 +106,7 @@ namespace Admin_Jardim
                 CaracteristicasCanteiros = caracteristicaCanteiros,
             };
 
-            jardins.Add(jardim);
-            Console.WriteLine("Jardim adicionado com sucesso!");
-        }
-
-        private void Editar()
-        {
-
-        }
-
-        private void Deletar()
-        {
-            int escolha = new MenuSelecionar<Jardim>(jardins, j => j.Nome, "jardim").Main();
-
-            jardins.RemoveAt(escolha);
-            Console.WriteLine("Jardim removido com sucesso!");
+            return jardim;
         }
     }
 }
