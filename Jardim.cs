@@ -8,25 +8,19 @@ namespace Admin_Jardim
 {
     public class Jardim
     {
-        private int id;
+        private string id;
         private string nome;
-        private string localizacao;
-        private string descricao;
-        private double area;
-        private string topografia;
-        private string equipaResponsavel;
-        private string caracteristicasCanteiros;
+        private string localizacao = "";
+        private string descricao = "";
+        private double area = -1;
+        private string topografia = "";
+        private string equipaResponsavel = "";
+        private string caracteristicasCanteiros = "";
 
-        public int Id
+        public string Id
         {
             get { return id; }
-            set
-            {
-                if (value <= 0)
-                    throw new ArgumentException("O ID do jardim deve ser um número positivo.");
-
-                id = value;
-            }
+            set { id = value; }
         }
 
         public string Nome
@@ -101,7 +95,8 @@ namespace Admin_Jardim
         public override string ToString()
         {
             return 
-                  $"Nome: {Nome}\n"
+                  $"---\n"
+                + $"Nome: {Nome}\n"
                 + $"Localização: {Localizacao}\n"
                 + $"Descricao: {Descricao}\n"
                 + $"Area: {Area}\n"

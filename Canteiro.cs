@@ -10,7 +10,7 @@ namespace Admin_Jardim
     {
         private string id;
         private string localizacao;
-        private int jardimId;
+        private string jardimId;
         private string composicaoCanteiro;
         private float area;
         private float areaSemeada;
@@ -34,16 +34,10 @@ namespace Admin_Jardim
             }
         }
 
-        public int JardimId
+        public string JardimId
         {
             get { return jardimId; }
-            set
-            {
-                if (value <= 0)
-                    throw new ArgumentException("O ID do jardim do canteiro deve ser um número positivo.");
-
-                jardimId = value;
-            }
+            set { jardimId = value; }
         }
 
         public string ComposicaoCanteiro

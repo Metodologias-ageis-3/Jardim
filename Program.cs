@@ -9,7 +9,7 @@ namespace Admin_Jardim
 {
     public class Program
     {
-        private static Context context = new Context();
+        private static Context context = new Context(populate: true);
 
         static void Main(string[] args)
         {

@@ -79,6 +79,7 @@ namespace Admin_Jardim
 
             Jardim jardim = new Jardim
             {
+                Id = Guid.NewGuid().ToString(),
                 Nome = nome,
                 Localizacao = localizacao,
                 Descricao = descricao,

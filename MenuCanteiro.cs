@@ -57,7 +57,7 @@ namespace Admin_Jardim
             string localizacao = Console.ReadLine();
             
             Console.Write("Jardim Id: ");
-            int jardimId = int.Parse(Console.ReadLine());
+            string jardimId = Console.ReadLine();
             
             Console.Write("Composição Canteiro: ");
             string composicaoCanteiro = Console.ReadLine();
