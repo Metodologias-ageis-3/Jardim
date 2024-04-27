@@ -23,7 +23,7 @@ namespace Admin_Jardim
             {
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Adicionar");
-                Console.WriteLine("5. Sair\n");
+                Console.WriteLine("5. Retornar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
 
@@ -36,6 +36,7 @@ namespace Admin_Jardim
                         return true;
                 }
 
+                Console.WriteLine("Pressione qualquer tecla para continuar...");
                 Console.ReadLine();
                 Console.Clear();
             }
@@ -43,21 +44,19 @@ namespace Admin_Jardim
 
         public void Adicionar()
         {
-            Console.WriteLine("Digite o item a ser adicionado:");
-
-            Console.WriteLine("Localização: ");
+            Console.Write("Localização: ");
             string localizacao = Console.ReadLine();
             
-            Console.WriteLine("Jardim Id: ");
+            Console.Write("Jardim Id: ");
             int jardimId = int.Parse(Console.ReadLine());
             
-            Console.WriteLine("Composição Canteiro: ");
+            Console.Write("Composição Canteiro: ");
             string composicaoCanteiro = Console.ReadLine();
             
-            Console.WriteLine("Área: ");
+            Console.Write("Área: ");
             float area = float.Parse(Console.ReadLine());
             
-            Console.WriteLine("Área Semeada: ");
+            Console.Write("Área Semeada: ");
             float areaSemeada = float.Parse(Console.ReadLine());
 
             Canteiro canteiro = new Canteiro
@@ -71,7 +70,7 @@ namespace Admin_Jardim
             };
 
             canteiros.Add(canteiro);
-            Console.WriteLine("Item adicionado com sucesso!");
+            Console.WriteLine("Canteiro adicionado com sucesso!");
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Admin_Jardim
     {
         public List<Canteiro> canteiros = new List<Canteiro>();
         public List<Arvore> arvores = new List<Arvore>();
-        public List<Jardim> jardim = new List<Jardim>();
+        public List<Jardim> jardins = new List<Jardim>();
     }
 }

@@ -16,21 +16,20 @@ namespace Admin_Jardim
             while (true)
             {
                 Console.WriteLine("Escolha uma opção:");
-                Console.WriteLine("1. Administrar canteiros");
-                Console.WriteLine("2. Administrar arvores");
-                Console.WriteLine("3. Administrar jardins");
+                Console.WriteLine("1. Administrar jardins");
+                Console.WriteLine("2. Administrar canteiros");
+                Console.WriteLine("3. Administrar arvores");
                 Console.WriteLine("5. Sair");
 
                 int escolha = int.Parse(Console.ReadLine());
-                Console.Clear();
 
                 switch (escolha)
                 {
                     case 1:
-                        new MenuCanteiro(context.canteiros).Main();
+                        new MenuJardim(context.jardins).Main();
                         break;
                     case 2:
-                        Console.WriteLine("Não implementado!");
+                        new MenuCanteiro(context.canteiros).Main();
                         break;
                     case 3:
                         Console.WriteLine("Não implementado!");
@@ -45,6 +44,10 @@ namespace Admin_Jardim
                         Console.WriteLine("Opção inválida. Tente novamente.");
                         break;
                 }
+
+                Console.WriteLine("Pressione qualquer tecla para continuar...");
+                Console.ReadLine();
+                Console.Clear();
             }
         }
     }
