@@ -97,5 +97,17 @@ namespace Admin_Jardim
             get { return caracteristicasCanteiros; }
             set { caracteristicasCanteiros = value; }
         }
+
+        public override string ToString()
+        {
+            return 
+                  $"Nome: {Nome}\n"
+                + $"Localização: {Localizacao}\n"
+                + $"Descricao: {Descricao}\n"
+                + $"Area: {Area}\n"
+                + $"Topografia: {Topografia}\n"
+                + $"Equipa Responsável: {EquipaResponsavel}\n"
+                + $"Características canteiros: {CaracteristicasCanteiros}\n";
+        }
     }
 }

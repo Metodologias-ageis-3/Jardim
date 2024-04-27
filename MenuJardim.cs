@@ -22,7 +22,8 @@ namespace Admin_Jardim
             while (true)
             {
                 Console.WriteLine("Escolha uma opção:");
-                Console.WriteLine("1. Adicionar");
+                Console.WriteLine("1. Listar");
+                Console.WriteLine("2. Adicionar");
                 Console.WriteLine("5. Retornar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
@@ -30,6 +31,9 @@ namespace Admin_Jardim
                 switch (escolha)
                 {
                     case 1:
+                        Listar();
+                        break;
+                    case 2:
                         Adicionar();
                         break;
                     case 5:
@@ -39,6 +43,14 @@ namespace Admin_Jardim
                 Console.WriteLine("Pressione qualquer tecla para continuar...");
                 Console.ReadLine();
                 Console.Clear();
+            }
+        }
+
+        private void Listar()
+        {
+            foreach (Jardim jardim in jardins)
+            {
+                Console.WriteLine(jardim);
             }
         }
 
