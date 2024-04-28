@@ -8,12 +8,10 @@ namespace Admin_Jardim
 {
     internal class MenuJardim
     {
-        private List<Jardim> jardins;
         private Context context;
 
-        public MenuJardim(List<Jardim> jardins, Context context = null) 
+        public MenuJardim( Context context = null) 
         { 
-            this.jardins = jardins;
             this.context = context;
         }
 
@@ -56,7 +54,7 @@ namespace Admin_Jardim
 
         private void Listar()
         {
-            foreach (Jardim jardim in jardins)
+            foreach (Jardim jardim in context.jardins)
             {
                 Console.WriteLine(jardim);
             }
@@ -64,23 +62,23 @@ namespace Admin_Jardim
 
         private void Adicionar() 
         {
-            jardins.Add(LerJardim());
+            context.jardins.Add(LerJardim());
             Console.WriteLine("Jardim adicionado com sucesso!");
         }
 
         private void Editar()
         {
-            int escolha = new MenuSelecionar<Jardim>(jardins, j => j.Nome, "jardim").Main();
+            int escolha = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
 
-            jardins[escolha] = LerJardim(jardins[escolha]);
+            context.jardins[escolha] = LerJardim(context.jardins[escolha]);
             Console.WriteLine("Jardim editado com sucesso!");
         }
 
         private void Deletar()
         {
-            int escolha = new MenuSelecionar<Jardim>(jardins, j => j.Nome, "jardim").Main();
+            int escolha = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
 
-            jardins.RemoveAt(escolha);
+            context.jardins.RemoveAt(escolha);
             Console.WriteLine("Jardim removido com sucesso!");
         }
 
