@@ -22,6 +22,7 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Listar");
                 Console.WriteLine("2. Adicionar");
+                Console.WriteLine("3. Deletar");
                 Console.WriteLine("5. Retornar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
@@ -33,6 +34,9 @@ namespace Admin_Jardim
                         break;
                     case 2:
                         Adicionar();
+                        break;
+                    case 3:
+                        Deletar();
                         break;
                     case 5:
                         return true;
@@ -91,6 +95,13 @@ namespace Admin_Jardim
 
             context.canteiros.Add(canteiro);
             Console.WriteLine("Canteiro adicionado com sucesso!");
+        }
+        private void Deletar()
+        {
+            int escolha = new MenuSelecionar<Canteiro>(context.canteiros, j => j.Localizacao +" - "+ j.Jardim.Nome, "canteiro").Main();
+
+            context.canteiros.RemoveAt(escolha);
+            Console.WriteLine("Canteiros removido com sucesso!");
         }
     }
 }
