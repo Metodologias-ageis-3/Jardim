@@ -22,7 +22,8 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Listar");
                 Console.WriteLine("2. Adicionar");
-                Console.WriteLine("3. Deletar");
+                Console.WriteLine("3. Editar");
+                Console.WriteLine("4. Deletar");
                 Console.WriteLine("5. Retornar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
@@ -36,8 +37,12 @@ namespace Admin_Jardim
                         Adicionar();
                         break;
                     case 3:
+                        Editar();
+                        break;
+                    case 4:
                         Deletar();
                         break;
+
                     case 5:
                         return true;
                 }
@@ -103,5 +108,44 @@ namespace Admin_Jardim
             context.canteiros.RemoveAt(escolha);
             Console.WriteLine("Canteiros removido com sucesso!");
         }
+        private void Editar()
+        {
+            int escolha = new MenuSelecionar<Canteiro>(context.canteiros, j => j.Localizacao + " - " + j.Jardim.Nome, "canteiro").Main();
+            Console.WriteLine(escolha);
+
+            Console.Write("Localização: ");
+            string localizacao = Console.ReadLine();
+
+
+            Jardim jardim = null;
+            do
+            {
+                Console.Write("Nome do Jardim: ");
+                string jardimNome = Console.ReadLine();
+                jardim = context.jardins.Where(j => j.Nome == jardimNome).ToList().FirstOrDefault();
+                if (jardim == null)
+                {
+                    Console.Write("\nJardim nao existe, digite novamente.\n");
+                }
+            } while (jardim == null);
+
+            Console.Write("Composição Canteiro: ");
+            string composicaoCanteiro = Console.ReadLine();
+
+            Console.Write("Área: ");
+            float area = float.Parse(Console.ReadLine());
+
+            Console.Write("Área Semeada: ");
+            float areaSemeada = float.Parse(Console.ReadLine());
+
+            context.canteiros[escolha].Localizacao= localizacao;
+            context.canteiros[escolha].ComposicaoCanteiro = composicaoCanteiro;
+            context.canteiros[escolha].Area = area;
+            context.canteiros[escolha].AreaSemeada = areaSemeada;
+            context.canteiros[escolha].Jardim = jardim;
+
+            Console.WriteLine("Canteiro editado com sucesso!");
+        }
+
     }
 }
