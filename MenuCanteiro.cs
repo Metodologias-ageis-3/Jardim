@@ -61,12 +61,12 @@ namespace Admin_Jardim
             Jardim jardim = null;
             do
             {
-                Console.Write("Jardim Id: ");
-                string jardimId = Console.ReadLine();
-                jardim = context.jardins.Where(j => j.Id == jardimId).First();
+                Console.Write("Nome do Jardim: ");
+                string jardimNome = Console.ReadLine();
+                jardim = context.jardins.Where(j => j.Nome == jardimNome).ToList().FirstOrDefault();
                 if (jardim == null)
                 {
-                    Console.Write("Jardim nao existe, digite novamente.");
+                    Console.Write("\nJardim nao existe, digite novamente.\n");
                 }
             } while (jardim == null);
 
