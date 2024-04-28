@@ -68,7 +68,16 @@ namespace Admin_Jardim
 
         private void Editar()
         {
-            int escolha = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
+            int escolha = -1;
+            while (escolha == -1)
+            {
+                int selecionado = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
+                if (selecionado < context.jardins.Count)
+                {
+                    escolha = selecionado;
+                }
+                Console.WriteLine("Essa opcao nao existe, escolha novamente");
+            }
 
             context.jardins[escolha] = LerJardim(context.jardins[escolha]);
             Console.WriteLine("Jardim editado com sucesso!");
@@ -76,7 +85,16 @@ namespace Admin_Jardim
 
         private void Deletar()
         {
-            int escolha = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
+            int escolha = -1;
+            while (escolha == -1)
+            {
+                int selecionado = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
+                if (selecionado < context.jardins.Count)
+                {
+                    escolha = selecionado;
+                }
+                Console.WriteLine("Essa opcao nao existe, escolha novamente");
+            }
 
             context.jardins.RemoveAt(escolha);
             Console.WriteLine("Jardim removido com sucesso!");

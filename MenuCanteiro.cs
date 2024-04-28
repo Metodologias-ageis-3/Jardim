@@ -103,8 +103,16 @@ namespace Admin_Jardim
         }
         private void Deletar()
         {
-            int escolha = new MenuSelecionar<Canteiro>(context.canteiros, j => j.Localizacao +" - "+ j.Jardim.Nome, "canteiro").Main();
-
+            int escolha = -1;
+            while (escolha == -1)
+            {
+                int selecionado = new MenuSelecionar<Canteiro>(context.canteiros, j => j.Localizacao + " - " + j.Jardim.Nome, "canteiro").Main();
+                if (selecionado < context.canteiros.Count)
+                {
+                    escolha = selecionado;
+                }
+                Console.WriteLine("Essa opcao nao existe, escolha novamente");
+            }
             context.canteiros.RemoveAt(escolha);
             Console.WriteLine("Canteiros removido com sucesso!");
         }
