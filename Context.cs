@@ -45,6 +45,33 @@ namespace Admin_Jardim
                     Localizacao = "Marrakesh",
                 },
             };
+            canteiros = new List<Canteiro>
+            {
+                new Canteiro{
+                    Id = Guid.NewGuid().ToString(),
+                    Localizacao = "Entrada",
+                    Jardim = jardins[1],
+                    ComposicaoCanteiro = "",
+                    Area = 4,
+                    AreaSemeada = 3
+                },
+                new Canteiro{
+                    Id = Guid.NewGuid().ToString(),
+                    Localizacao = "Estacionamento",
+                    Jardim = jardins[2],
+                    ComposicaoCanteiro = "",
+                    Area = 10,
+                    AreaSemeada = 3
+                },
+                new Canteiro{
+                    Id = Guid.NewGuid().ToString(),
+                    Localizacao = "Central",
+                    Jardim = jardins[0],
+                    ComposicaoCanteiro = "",
+                    Area = 20,
+                    AreaSemeada = 15
+                }
+            };
         }
     }
 }

@@ -46,7 +46,10 @@ namespace Admin_Jardim
 
         public void Listar()
         {
-            
+            foreach (Canteiro canteiro in context.canteiros)
+            {
+                Console.WriteLine(canteiro);
+            }
         }
 
         public void Adicionar()

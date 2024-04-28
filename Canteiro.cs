@@ -61,10 +61,24 @@ namespace Admin_Jardim
         public float AreaSemeada
         {
             get { return areaSemeada; }
-            set { areaSemeada = value; }
+            set { if (value > area)
+                {
+                    throw new ArgumentException("Area semeada maior que area total, digite um valor correto.");
+                }
+                areaSemeada = value;
+            }
+        }
+        public override string ToString()
+        {
+            return
+                  $"---\n"
+                + $"Localização: {Localizacao}\n"
+                + $"Jardim: {Jardim.Nome}\n"
+                + $"Area: {Area}\n"
+                + $"Area semeada: {AreaSemeada}\n";
         }
 
-        
+
     }
 
 }
