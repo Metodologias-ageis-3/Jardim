@@ -8,12 +8,10 @@ namespace Admin_Jardim
 {
     internal class MenuCanteiro
     {
-        private List<Canteiro> canteiros;
         private Context context = null;
 
-        public MenuCanteiro(List<Canteiro> canteiros, Context context = null) 
+        public MenuCanteiro( Context context = null) 
         { 
-            this.canteiros = canteiros;
             this.context = context;
         }
 
@@ -78,7 +76,7 @@ namespace Admin_Jardim
                 AreaSemeada = areaSemeada,
             };
 
-            canteiros.Add(canteiro);
+            context.canteiros.Add(canteiro);
             Console.WriteLine("Canteiro adicionado com sucesso!");
         }
     }
