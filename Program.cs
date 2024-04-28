@@ -26,7 +26,7 @@ namespace Admin_Jardim
                 switch (escolha)
                 {
                     case 1:
-                        new MenuJardim(context.jardins).Main();
+                        new MenuJardim(context).Main();
                         break;
                     case 2:
                         new MenuCanteiro(context.canteiros).Main();
