@@ -10,7 +10,7 @@ namespace Admin_Jardim
     {
         private string id;
         private string localizacao;
-        private string jardimId;
+        private Jardim jardim;
         private string composicaoCanteiro;
         private float area;
         private float areaSemeada;
@@ -34,10 +34,10 @@ namespace Admin_Jardim
             }
         }
 
-        public string JardimId
+        public Jardim Jardim
         {
-            get { return jardimId; }
-            set { jardimId = value; }
+            get { return jardim; }
+            set { jardim = value; }
         }
 
         public string ComposicaoCanteiro

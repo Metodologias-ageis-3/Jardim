@@ -54,9 +54,19 @@ namespace Admin_Jardim
             Console.Write("Localização: ");
             string localizacao = Console.ReadLine();
             
-            Console.Write("Jardim Id: ");
-            string jardimId = Console.ReadLine();
             
+            Jardim jardim = null;
+            do
+            {
+                Console.Write("Jardim Id: ");
+                string jardimId = Console.ReadLine();
+                jardim = context.jardins.Where(j => j.Id == jardimId).First();
+                if (jardim == null)
+                {
+                    Console.Write("Jardim nao existe, digite novamente.");
+                }
+            } while (jardim == null);
+
             Console.Write("Composição Canteiro: ");
             string composicaoCanteiro = Console.ReadLine();
             
@@ -70,7 +80,7 @@ namespace Admin_Jardim
             {
                 Id = Guid.NewGuid().ToString(),
                 Localizacao = localizacao,
-                JardimId = jardimId,
+                Jardim = jardim,
                 ComposicaoCanteiro = composicaoCanteiro,
                 Area = area,
                 AreaSemeada = areaSemeada,
