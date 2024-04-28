@@ -29,7 +29,7 @@ namespace Admin_Jardim
                         new MenuJardim(context).Main();
                         break;
                     case 2:
-                        new MenuCanteiro(context.canteiros).Main();
+                        new MenuCanteiro(context).Main();
                         break;
                     case 3:
                         Console.WriteLine("Não implementado!");
