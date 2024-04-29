@@ -20,8 +20,8 @@ namespace Admin_Jardim
                 Console.WriteLine("1. Listar");
                 Console.WriteLine("2. Adicionar");
                 Console.WriteLine("3. Editar");
-                Console.WriteLine("4. Deletar");
-                Console.WriteLine("5. Retornar\n");
+                Console.WriteLine("4. Apagar");
+                Console.WriteLine("5. Voltar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
 

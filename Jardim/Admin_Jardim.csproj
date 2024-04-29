@@ -44,15 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arvore.cs" />
-    <Compile Include="Canteiro.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="Jardim.cs" />
-    <Compile Include="MenuArvore.cs" />
-    <Compile Include="MenuCampo.cs" />
-    <Compile Include="MenuCanteiro.cs" />
-    <Compile Include="MenuJardim.cs" />
-    <Compile Include="MenuSelecionar.cs" />
+    <Compile Include="Classes\Arvore.cs" />
+    <Compile Include="Classes\Canteiro.cs" />
+    <Compile Include="Menus\Context.cs" />
+    <Compile Include="Classes\Jardim.cs" />
+    <Compile Include="Menus\MenuArvore.cs" />
+    <Compile Include="Menus\MenuCampo.cs" />
+    <Compile Include="Menus\MenuCanteiro.cs" />
+    <Compile Include="Menus\MenuJardim.cs" />
+    <Compile Include="Menus\MenuSelecionar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
