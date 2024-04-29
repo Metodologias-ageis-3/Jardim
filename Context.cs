@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Admin_Jardim
 {
@@ -70,6 +71,23 @@ namespace Admin_Jardim
                     ComposicaoCanteiro = "",
                     Area = 20,
                     AreaSemeada = 15
+                }
+            };
+            arvores = new List<Arvore>
+            {
+                new Arvore {
+                    Id = Guid.NewGuid().ToString(),
+                    Especie = "teste",
+                    Altura = 4,
+                    DiametroTronco = 4,
+                    Idade = 4,
+                    Canteiro = canteiros[1],
+                    CondicaoSaude = "teste",
+                    NotasAdicionais = "",
+                    QuantidadeAguaConsumida = 5,
+                    EquipePlantio = "vermelha",
+                    EquipeRemocao = "",
+                    DataPlantio = Convert.ToDateTime("12/05/2023")
                 }
             };
         }
