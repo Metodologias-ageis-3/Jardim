@@ -60,7 +60,7 @@ namespace Admin_Jardim
         }
 
 
-        public void Adicionar()
+        public void Adicionar() 
         {
             Console.Write("Especie: ");
             string especie = Console.ReadLine();
@@ -150,5 +150,6 @@ namespace Admin_Jardim
             context.arvores.Add(arvore);
             Console.WriteLine("Canteiro adicionado com sucesso!");
         }
+
     }
 }
