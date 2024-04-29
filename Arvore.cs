@@ -8,23 +8,20 @@ namespace Admin_Jardim
 {
     public class Arvore
     {
-        private int id;
+        private string id;
         private string especie;
         private double altura;
         private double diametroTronco;
         private int idade;
-        private string localizacao;
+        private Jardim jardim;
         private List<string> historicoTratamentos;
         private string condicaoSaude;
-        private int jardimId;
-        private int canteiroId;
+        private Canteiro canteiro;
         private string notasAdicionais;
-        private DateTime dataInicio;
-        private DateTime dataFim;
         private double quantidadeAguaConsumida;
         private DateTime dataPlantio;
         private string equipePlantio;
-        private DateTime dataRemocao;
+        private DateTime? dataRemocao;
         private string equipeRemocao;
 
         public Arvore()
@@ -32,13 +29,13 @@ namespace Admin_Jardim
             historicoTratamentos = new List<string>();
         }
 
-        public int Id
+        public string Id
         {
             get { return id; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("O ID da árvore deve ser um número positivo.");
+                if (value == "")
+                    throw new ArgumentException("O ID da árvore nao pode estar vazio.");
 
                 id = value;
             }
@@ -95,16 +92,10 @@ namespace Admin_Jardim
             }
         }
 
-        public string Localizacao
+        public Jardim Jardim
         {
-            get { return localizacao; }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentException("A localização da árvore não pode estar vazia.");
-
-                localizacao = value;
-            }
+            get { return jardim; }
+            set { jardim = value; }
         }
 
         public List<string> HistoricoTratamentos
@@ -119,16 +110,10 @@ namespace Admin_Jardim
             set { condicaoSaude = value; }
         }
 
-        public int JardimId
+        public Canteiro Canteiro
         {
-            get { return jardimId; }
-            set { jardimId = value; }
-        }
-
-        public int CanteiroId
-        {
-            get { return canteiroId; }
-            set { canteiroId = value; }
+            get { return canteiro; }
+            set { canteiro = value; }
         }
 
         public string NotasAdicionais
@@ -137,22 +122,17 @@ namespace Admin_Jardim
             set { notasAdicionais = value; }
         }
 
-        public DateTime DataInicio
-        {
-            get { return dataInicio; }
-            set { dataInicio = value; }
-        }
-
-        public DateTime DataFim
-        {
-            get { return dataFim; }
-            set { dataFim = value; }
-        }
 
         public double QuantidadeAguaConsumida
         {
             get { return quantidadeAguaConsumida; }
-            set { quantidadeAguaConsumida = value; }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número positivo.");
+
+                quantidadeAguaConsumida = value;
+            }
         }
 
         public DateTime DataPlantio
@@ -167,7 +147,7 @@ namespace Admin_Jardim
             set { equipePlantio = value; }
         }
 
-        public DateTime DataRemocao
+        public DateTime? DataRemocao
         {
             get { return dataRemocao; }
             set { dataRemocao = value; }
@@ -177,6 +157,15 @@ namespace Admin_Jardim
         {
             get { return equipeRemocao; }
             set { equipeRemocao = value; }
+        }
+
+        public override string ToString()
+        {
+            return
+                  $"---\n"
+                + $"Especie: {Especie}\n"
+                + $"Altura: {Altura}\n"
+                + $"Idade: {Idade}\n";
         }
     }
 }
