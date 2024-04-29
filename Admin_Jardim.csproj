@@ -8,10 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Admin_Jardim</RootNamespace>
     <AssemblyName>Admin_Jardim</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,6 +48,7 @@
     <Compile Include="Canteiro.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Jardim.cs" />
+    <Compile Include="MenuArvore.cs" />
     <Compile Include="MenuCampo.cs" />
     <Compile Include="MenuCanteiro.cs" />
     <Compile Include="MenuJardim.cs" />
