@@ -24,7 +24,8 @@ namespace Admin_Jardim
                 Console.WriteLine("2. Adicionar");
                 Console.WriteLine("3. Editar");
                 Console.WriteLine("4. Deletar");
-                Console.WriteLine("5. Retornar\n");
+                Console.WriteLine("5. Listar arvores de um Canteiro");
+                Console.WriteLine("6. Retornar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
 
@@ -42,8 +43,11 @@ namespace Admin_Jardim
                     case 4:
                         Deletar();
                         break;
-
                     case 5:
+                        ListarArvoreCanteiro();
+                        break;
+
+                    case 6:
                         return true;
                 }
 
@@ -98,7 +102,7 @@ namespace Admin_Jardim
                 AreaSemeada = areaSemeada,
             };
 
-            context.canteiros.Add(canteiro);
+            context.AdicionarCanteiroJardim(canteiro);
             Console.WriteLine("Canteiro adicionado com sucesso!");
         }
         private void Deletar()
@@ -161,6 +165,28 @@ namespace Admin_Jardim
             context.canteiros[escolha].Jardim = jardim;
 
             Console.WriteLine("Canteiro editado com sucesso!");
+        }
+
+        public void ListarArvoreCanteiro()
+        {
+            int escolha = -1;
+            while (escolha == -1)
+            {
+                int selecionado = new MenuSelecionar<Canteiro>(context.canteiros, j => j.Localizacao + " - " + j.Jardim.Nome, "canteiro").Main();
+                if (selecionado < context.canteiros.Count)
+                {
+                    escolha = selecionado;
+                }
+                else
+                {
+                    Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                }
+            }
+            Canteiro canteiro = context.canteiros[escolha];
+            foreach(Arvore arvore in canteiro.ListarArvoresExistentes())
+            {
+                Console.WriteLine(arvore);
+            }
         }
 
     }

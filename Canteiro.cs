@@ -14,6 +14,7 @@ namespace Admin_Jardim
         private string composicaoCanteiro;
         private float area;
         private float areaSemeada;
+        private List<Arvore> arvores = new List<Arvore>();
 
         public string Id
         {
@@ -68,6 +69,11 @@ namespace Admin_Jardim
                 areaSemeada = value;
             }
         }
+
+        public void AdicionarArvore(Arvore arvore)
+        {
+            arvores.Add(arvore);
+        }
         public override string ToString()
         {
             return
@@ -85,9 +91,10 @@ namespace Admin_Jardim
             return true;
         }
 
-        
-
-
+        public List<Arvore> ListarArvoresExistentes() 
+        {
+            return arvores.Where(t => t.DataRemocao == null).ToList();
+        }
     }
 
 }

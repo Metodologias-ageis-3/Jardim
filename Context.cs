@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -51,7 +52,7 @@ namespace Admin_Jardim
                 new Canteiro{
                     Id = Guid.NewGuid().ToString(),
                     Localizacao = "Entrada",
-                    Jardim = jardins[1],
+                    Jardim = jardins[0],
                     ComposicaoCanteiro = "",
                     Area = 4,
                     AreaSemeada = 3
@@ -59,7 +60,7 @@ namespace Admin_Jardim
                 new Canteiro{
                     Id = Guid.NewGuid().ToString(),
                     Localizacao = "Estacionamento",
-                    Jardim = jardins[2],
+                    Jardim = jardins[1],
                     ComposicaoCanteiro = "",
                     Area = 10,
                     AreaSemeada = 3
@@ -67,7 +68,7 @@ namespace Admin_Jardim
                 new Canteiro{
                     Id = Guid.NewGuid().ToString(),
                     Localizacao = "Central",
-                    Jardim = jardins[0],
+                    Jardim = jardins[2],
                     ComposicaoCanteiro = "",
                     Area = 20,
                     AreaSemeada = 15
@@ -90,6 +91,23 @@ namespace Admin_Jardim
                     DataPlantio = Convert.ToDateTime("12/05/2023")
                 }
             };
+
+            canteiros[1].AdicionarArvore(arvores[0]);
+            jardins[0].AdicionarCanteiro(canteiros[0]);
+            jardins[1].AdicionarCanteiro(canteiros[1]);
+            jardins[2].AdicionarCanteiro(canteiros[2]);
+        }
+
+        public void AdicionarArvoreCanteiro(Arvore arvore)
+        {
+            arvores.Add(arvore);
+            arvore.Canteiro.AdicionarArvore(arvore);
+        }
+
+        public void AdicionarCanteiroJardim(Canteiro canteiro)
+        {
+            canteiros.Add(canteiro);
+            canteiro.Jardim.AdicionarCanteiro(canteiro);
         }
     }
 }

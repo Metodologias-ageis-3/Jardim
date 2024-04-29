@@ -16,6 +16,7 @@ namespace Admin_Jardim
         private string topografia = "";
         private string equipaResponsavel = "";
         private string caracteristicasCanteiros = "";
+        private List<Canteiro> canteiros = new List<Canteiro>();
 
         public string Id
         {
@@ -103,6 +104,11 @@ namespace Admin_Jardim
                 + $"Topografia: {Topografia}\n"
                 + $"Equipa Responsável: {EquipaResponsavel}\n"
                 + $"Características canteiros: {CaracteristicasCanteiros}\n";
+        }
+
+        public void AdicionarCanteiro(Canteiro canteiro)
+        {
+            canteiros.Add(canteiro);
         }
     }
 }
