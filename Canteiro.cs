@@ -78,6 +78,15 @@ namespace Admin_Jardim
                 + $"Area semeada: {AreaSemeada}\n";
         }
 
+        public bool RemoverArvore(Arvore arvore, string equipe)
+        {
+            arvore.DataRemocao = DateTime.Now;
+            arvore.EquipeRemocao = equipe;
+            return true;
+        }
+
+        
+
 
     }
 
