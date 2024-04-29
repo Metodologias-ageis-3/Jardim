@@ -37,7 +37,7 @@ namespace Admin_Jardim
                         //Editar();
                         break;
                     case 4:
-                        //Deletar();
+                        Deletar();
                         break;
 
                     case 5:
@@ -109,6 +109,9 @@ namespace Admin_Jardim
             Console.Write("Notas adicionais: ");
             string notasAdicionais = Console.ReadLine();
 
+            Console.Write("Quantidade de agua consumida: ");
+            float quantidadeAguaConsumida = float.Parse(Console.ReadLine());
+
             Console.Write("Data de início (DD/MM/YYYY): ");
             string dataPlantio = Console.ReadLine();
 
@@ -118,8 +121,6 @@ namespace Admin_Jardim
             Console.Write("Data de fim (DD/MM/YYYY): ");
             string dataRemocao = Console.ReadLine();
 
-            Console.Write("Quantidade de agua consumida: ");
-            float quantidadeAguaConsumida = float.Parse(Console.ReadLine());
 
             Console.Write("Equipa de remocao: ");
             string equipeRemocao = Console.ReadLine();
@@ -151,5 +152,20 @@ namespace Admin_Jardim
             Console.WriteLine("Canteiro adicionado com sucesso!");
         }
 
+        private void Deletar()
+        {
+            int escolha = -1;
+            while (escolha == -1)
+            {
+                int selecionado = new MenuSelecionar<Arvore>(context.arvores, a => a.Especie + " - " + a.Canteiro.Localizacao, "arvore").Main();
+                if (selecionado < context.arvores.Count)
+                {
+                    escolha = selecionado;
+                }
+                Console.WriteLine("Essa opcao nao existe, escolha novamente");
+            }
+            context.arvores.RemoveAt(escolha);
+            Console.WriteLine("Arvore removido com sucesso!");
+        }
     }
 }
