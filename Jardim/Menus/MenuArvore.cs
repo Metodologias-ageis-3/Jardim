@@ -44,7 +44,7 @@ namespace Admin_Jardim
                         return true;
                 }
 
-                Console.WriteLine("Pressione qualquer tecla para continuar...");
+                Console.WriteLine("Pressione a tecla Enter para continuar...");
                 Console.ReadLine();
                 Console.Clear();
             }
