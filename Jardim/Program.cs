@@ -18,26 +18,26 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Administrar jardins");
                 Console.WriteLine("2. Administrar canteiros");
-                Console.WriteLine("3. Administrar arvores");
-                Console.WriteLine("5. Sair");
+                Console.WriteLine("3. Administrar árvores");
+                Console.WriteLine("4. Sair");
 
-                int escolha = int.Parse(Console.ReadLine());
+                string entrada = Console.ReadLine();
 
-                switch (escolha)
+                switch (entrada)
                 {
-                    case 1:
+                    case "1":
                         new MenuJardim(context).Main();
                         break;
-                    case 2:
+                    case "2":
                         new MenuCanteiro(context).Main();
                         break;
-                    case 3:
+                    case "3":
                         new MenuArvore(context).Main();
                         break;
-                    case 4:
+                    case "4":
                         Console.WriteLine("Não implementado!");
                         break;
-                    case 5:
+                    case "5":
                         Environment.Exit(0);
                         break;
                     default:

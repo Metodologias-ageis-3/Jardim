@@ -62,25 +62,42 @@ namespace Admin_Jardim
 
         private void Adicionar() 
         {
-            context.jardins.Add(LerJardim());
-            Console.WriteLine("Jardim adicionado com sucesso!");
+            try
+            {
+                context.jardins.Add(LerJardim());
+                Console.WriteLine("Jardim adicionado com sucesso!");
+            } 
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.Message); 
+            }
         }
 
         private void Editar()
         {
             int escolha = -1;
-            while (escolha == -1)
+            
+            try
             {
-                int selecionado = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
-                if (selecionado < context.jardins.Count)
+                while (escolha == -1)
                 {
-                    escolha = selecionado;
+                    int selecionado = new MenuSelecionar<Jardim>(context.jardins, j => j.Nome, "jardim").Main();
+               
+                    if (selecionado < context.jardins.Count)
+                    {
+                        escolha = selecionado;
+                    }
+                
+                    Console.WriteLine("Essa opcao nao existe, escolha novamente");
                 }
-                Console.WriteLine("Essa opcao nao existe, escolha novamente");
-            }
 
-            context.jardins[escolha] = LerJardim(context.jardins[escolha]);
-            Console.WriteLine("Jardim editado com sucesso!");
+                context.jardins[escolha] = LerJardim(context.jardins[escolha]);
+                Console.WriteLine("Jardim editado com sucesso!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         private void Deletar()
@@ -109,6 +126,7 @@ namespace Admin_Jardim
             string topografia = new MenuCampo<Jardim>("Topografia", j => j.Topografia, jardimInicial).Main(); ;
             string equipaResponsavel = new MenuCampo<Jardim>("Equipa Responsável", j => j.EquipaResponsavel, jardimInicial).Main(); ;
             string caracteristicaCanteiros = new MenuCampo<Jardim>("Característica Canteiros", j => j.CaracteristicasCanteiros, jardimInicial).Main(); ;
+
 
             Jardim jardim = new Jardim
             {

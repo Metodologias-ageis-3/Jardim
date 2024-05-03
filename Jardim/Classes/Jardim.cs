@@ -18,6 +18,7 @@ namespace Admin_Jardim
         private string equipaResponsavel = "";
         private string caracteristicasCanteiros = "";
         private List<Canteiro> canteiros = new List<Canteiro>();
+        private static HashSet<string> nomesExistem = new HashSet<string>();
 
         public string Id
         {
@@ -36,7 +37,11 @@ namespace Admin_Jardim
                 if (value.Length > 128)
                     throw new ArgumentException("O nome do jardim não pode ter mais de 128 caracteres.");
 
+                if (nomesExistem.Contains(value))
+                    throw new ArgumentException("Já existe um jardim com este nome.");
+
                 nome = value;
+                nomesExistem.Add(value);
             }
         }
 
@@ -69,17 +74,23 @@ namespace Admin_Jardim
             get { return area; }
             set
             {
-                if (value < 0)
+                if (!double.TryParse(value.ToString(), out double parsedValue) || parsedValue < 0)
                     throw new ArgumentException("A área do jardim deve ser um número positivo.");
 
-                area = value;
+                area = parsedValue;
             }
         }
 
         public string Topografia
         {
             get { return topografia; }
-            set { topografia = value; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("A topografia do jardim não pode estar vazia.");
+
+                localizacao = value;
+            }
         }
 
         public string EquipaResponsavel
