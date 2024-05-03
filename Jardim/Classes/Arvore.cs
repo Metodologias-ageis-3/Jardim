@@ -16,7 +16,7 @@ namespace Admin_Jardim
         private Jardim jardim;
         private List<string> historicoTratamentos;
         private string condicaoSaude;
-        private Canteiro canteiro;
+        private Canteiro? canteiro=null;
         private string notasAdicionais;
         private double quantidadeAguaConsumida;
         private DateTime dataPlantio;
@@ -51,6 +51,9 @@ namespace Admin_Jardim
 
                 if (value.Length > 128)
                     throw new ArgumentException("O nome da espécie não pode ter mais de 128 caracteres.");
+
+                if (int.TryParse(value, out int n))
+                    throw new ArgumentException("O nome da espécie não pode ser um inteiro.");
 
                 especie = value;
             }
@@ -107,10 +110,21 @@ namespace Admin_Jardim
         public string CondicaoSaude
         {
             get { return condicaoSaude; }
-            set { condicaoSaude = value; }
+            set {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("A condição de saúde não pode estar vazio.");
+
+                if (value.Length > 128)
+                    throw new ArgumentException("A condição de saúde não pode ter mais de 128 caracteres.");
+
+                if (int.TryParse(value, out int n))
+                    throw new ArgumentException("A condição de saúde não pode ser um inteiro.");
+
+                condicaoSaude = value;
+            }
         }
 
-        public Canteiro Canteiro
+        public Canteiro? Canteiro
         {
             get { return canteiro; }
             set { canteiro = value; }
@@ -119,7 +133,14 @@ namespace Admin_Jardim
         public string NotasAdicionais
         {
             get { return notasAdicionais; }
-            set { notasAdicionais = value; }
+            set {
+
+                if (value.Length > 128)
+                    throw new ArgumentException("As notas adicionais e não pode ter mais de 128 caracteres.");
+
+                if (int.TryParse(value, out int n))
+                    throw new ArgumentException("As notas adicionais  não pode ser um inteiro.");
+                notasAdicionais = value; }
         }
 
 
@@ -144,19 +165,44 @@ namespace Admin_Jardim
         public string EquipePlantio
         {
             get { return equipePlantio; }
-            set { equipePlantio = value; }
+            set {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("A equipa não pode estar vazio.");
+
+                if (value.Length > 128)
+                    throw new ArgumentException("A equipa não pode ter mais de 128 caracteres.");
+
+                if (int.TryParse(value, out int n))
+                    throw new ArgumentException("A equipa não pode ser um inteiro.");
+                equipePlantio = value; }
         }
 
         public DateTime? DataRemocao
         {
             get { return dataRemocao; }
-            set { dataRemocao = value; }
+            set {
+                if (value != null)
+                {
+                    if (value < dataPlantio)
+                    {
+                        throw new ArgumentException("Erro: A data de remoção não pode ser anterior à data de plantio.");
+
+                    }
+                }
+                dataRemocao = value; }
         }
 
         public string EquipeRemocao
         {
             get { return equipeRemocao; }
-            set { equipeRemocao = value; }
+            set {
+
+                if (value.Length > 128)
+                    throw new ArgumentException("A equipa não pode ter mais de 128 caracteres.");
+
+                if (int.TryParse(value, out int n))
+                    throw new ArgumentException("A equipa não pode ser um inteiro.");
+                equipeRemocao = value; }
         }
 
         public void AdicionarTratamento(string pTratamento)

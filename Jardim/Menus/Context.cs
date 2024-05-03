@@ -109,5 +109,27 @@ namespace Admin_Jardim
             canteiros.Add(canteiro);
             canteiro.Jardim.AdicionarCanteiro(canteiro);
         }
+        public void AdicionarArvoreJardim(Arvore arvore)
+        {
+            arvores.Add(arvore);
+            arvore.Jardim.AdicionarArvore(arvore);
+        }
+
+        public void EditarArvore(Arvore arvore, Arvore arvoreNova) { 
+            if(arvore.Canteiro != null)
+            {
+                var canteiro = arvore.Canteiro;
+                canteiro.DeleteArvore(arvore);
+                canteiro.AdicionarArvore(arvoreNova);
+            }
+            else
+            {
+                var jardim = arvore.Jardim;
+                jardim.DeleteArvore(arvore);
+                jardim.AdicionarArvore(arvoreNova);
+            }
+            arvores.Remove(arvore);
+            arvores.Add(arvoreNova);
+        }
     }
 }

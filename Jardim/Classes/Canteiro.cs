@@ -69,6 +69,10 @@ namespace Admin_Jardim
                 areaSemeada = value;
             }
         }
+        public void DeleteArvore(Arvore arvore)
+        {
+            arvores.Remove(arvore);
+        }
 
         public void AdicionarArvore(Arvore arvore)
         {

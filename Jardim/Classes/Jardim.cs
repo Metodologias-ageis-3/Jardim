@@ -18,6 +18,7 @@ namespace Admin_Jardim
         private string equipaResponsavel = "";
         private string caracteristicasCanteiros = "";
         private List<Canteiro> canteiros = new List<Canteiro>();
+        private List<Arvore> arvores = new List<Arvore>();
         private static HashSet<string> nomesExistem = new HashSet<string>();
 
         public string Id
@@ -125,6 +126,14 @@ namespace Admin_Jardim
         public void AdicionarCanteiro(Canteiro canteiro)
         {
             canteiros.Add(canteiro);
+        }
+        public void AdicionarArvore(Arvore arvore)
+        {
+            arvores.Add(arvore);
+        }
+        public void DeleteArvore(Arvore arvore)
+        {
+            arvores.Remove(arvore);
         }
     }
 }
