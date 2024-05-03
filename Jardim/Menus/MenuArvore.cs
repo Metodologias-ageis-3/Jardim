@@ -34,7 +34,7 @@ namespace Admin_Jardim
                         Adicionar();
                         break;
                     case 3:
-                        //Editar();
+                        Editar();
                         break;
                     case 4:
                         Deletar();
@@ -121,9 +121,24 @@ namespace Admin_Jardim
             Console.Write("Data de fim (DD/MM/YYYY): ");
             string dataRemocao = Console.ReadLine();
 
+            DateTime dataPlantioDateTime = Convert.ToDateTime(dataPlantio);
+
+            if (!string.IsNullOrEmpty(dataRemocao))
+            {
+                DateTime dataRemocaoDateTime = Convert.ToDateTime(dataRemocao);
+
+                if (dataRemocaoDateTime < dataPlantioDateTime)
+                {
+                    Console.WriteLine("Erro: A data de remoção não pode ser anterior à data de plantio.");
+
+                    return;
+                }
+            }
 
             Console.Write("Equipa de remocao: ");
             string equipeRemocao = Console.ReadLine();
+
+            
 
             Arvore arvore = new Arvore
             {
@@ -141,7 +156,7 @@ namespace Admin_Jardim
                 DataPlantio = Convert.ToDateTime(dataPlantio)
             };
 
-            if (dataRemocao != "")
+            if (!string.IsNullOrEmpty(dataRemocao))
             {
                 arvore.DataRemocao = Convert.ToDateTime(dataRemocao);
             }
@@ -191,7 +206,7 @@ namespace Admin_Jardim
             Jardim jardim = null;
             do
             {
-                Console.Write("Nome do Jardim: ");
+                Console.Write("Nome do Jardim que pertence: ");
                 string jardimNome = Console.ReadLine();
                 jardim = context.jardins.Where(j => j.Nome == jardimNome).ToList().FirstOrDefault();
                 if (jardim == null)
@@ -239,6 +254,20 @@ namespace Admin_Jardim
 
             Console.Write("Data de fim (DD/MM/YYYY): ");
             string dataRemocao = Console.ReadLine();
+
+            DateTime dataPlantioDateTime = Convert.ToDateTime(dataPlantio);
+
+            if (!string.IsNullOrEmpty(dataRemocao))
+            {
+                DateTime dataRemocaoDateTime = Convert.ToDateTime(dataRemocao);
+
+                if (dataRemocaoDateTime < dataPlantioDateTime)
+                {
+                    Console.WriteLine("Erro: A data de remoção não pode ser anterior à data de plantio.");
+
+                    return;
+                }
+            }
 
             Console.Write("Equipa de remocao: ");
             string equipeRemocao = Console.ReadLine();
