@@ -62,8 +62,15 @@ namespace Admin_Jardim
 
         private void Adicionar() 
         {
-            context.jardins.Add(LerJardim());
-            Console.WriteLine("Jardim adicionado com sucesso!");
+            try
+            {
+                context.jardins.Add(LerJardim());
+                Console.WriteLine("Jardim adicionado com sucesso!");
+            } 
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.Message); 
+            }
         }
 
         private void Editar()
