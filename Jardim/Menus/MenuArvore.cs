@@ -72,7 +72,7 @@ namespace Admin_Jardim
             Jardim jardim = null;
             do
             {
-                Console.Write("Nome do Jardim: ");
+                Console.Write("Nome do jardim que pertence: ");
                 string jardimNome = Console.ReadLine();
                 jardim = context.jardins.Where(j => j.Nome == jardimNome).ToList().FirstOrDefault();
                 if (jardim == null)
