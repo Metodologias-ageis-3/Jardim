@@ -110,6 +110,7 @@ namespace Admin_Jardim
             string equipaResponsavel = new MenuCampo<Jardim>("Equipa Responsável", j => j.EquipaResponsavel, jardimInicial).Main(); ;
             string caracteristicaCanteiros = new MenuCampo<Jardim>("Característica Canteiros", j => j.CaracteristicasCanteiros, jardimInicial).Main(); ;
 
+
             Jardim jardim = new Jardim
             {
                 Id = jardimInicial != null ? jardimInicial.Id : Guid.NewGuid().ToString(),
