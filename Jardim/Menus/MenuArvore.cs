@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Contexts;
@@ -8,6 +9,13 @@ namespace Admin_Jardim
     internal class MenuArvore
     {
         private Context context;
+
+        private Func<Arvore, string> nomeArvoreNaSelecao = (a) => {
+            return $"especie                = {a.Especie}\n"
+                + $"  localização            = {a.Localizacao}\n"
+                + $"  localização (Jardim)   = {a.Jardim?.Localizacao}\n"
+                + $"  localização (Canteiro) = {a.Canteiro?.Localizacao}\n";
+        };
 
         public MenuArvore(Context context = null)
         {
@@ -65,22 +73,16 @@ namespace Admin_Jardim
         public void Adicionar() 
         {
             try {
-                int escolha = -1;
-                while (escolha == -1)
-                {
-                    int selecionado = new MenuSelecionar<Jardim>(context.jardins, a => a.Nome, "jardim").Main();
-                    if (selecionado < context.jardins.Count)
-                    {
-                        escolha = selecionado;
-                    }
-                    else { Console.WriteLine("Essa opcao nao existe, escolha novamente"); }
-                }
+                int escolha = new MenuSelecionar<Jardim>(context.jardins, a => a.Nome, "jardim").Main(loop: true);
 
                 Arvore arvore = new Arvore();
                 arvore.Jardim = context.jardins[escolha];
 
                 Console.Write("Especie: ");
                 arvore.Especie = Console.ReadLine();
+
+                Console.Write("Localização: ");
+                arvore.Localizacao = Console.ReadLine();
 
                 Console.Write("Altura: ");
                 arvore.Altura = float.Parse(Console.ReadLine());
@@ -98,32 +100,12 @@ namespace Admin_Jardim
                 Console.Write("Condicao de saude: ");
                 arvore.CondicaoSaude = Console.ReadLine();
 
+                int canteiroEscolhido = new MenuSelecionar<Canteiro>(context.canteiros, c => c.Localizacao, "canteiro").Main(loop: true, permiteNulo: true);
 
-                Canteiro canteiro = null;
-                while (true)
+                if (canteiroEscolhido != MenuSelecionar<Canteiro>.NENHUM)
                 {
-                    Console.Write("Nome do canteiro (deixe em branco se nao houver canteiro): ");
-                    string canteiroLocalizacao = Console.ReadLine();
-
-                    if (string.IsNullOrWhiteSpace(canteiroLocalizacao))
-                    {
-                        break;
-                    }
-
-                    canteiro = context.canteiros.Where(j => j.Localizacao == canteiroLocalizacao).ToList().FirstOrDefault();
-
-
-                    if (canteiro == null)
-                    {
-                        Console.Write("\nCanteiro nao existe, digite novamente ou deixe em branco se nao houver canteiro.\n");
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    arvore.Canteiro = context.canteiros[canteiroEscolhido];
                 }
-                arvore.Canteiro = canteiro;
-
 
                 Console.Write("Notas adicionais: ");
                 arvore.NotasAdicionais = Console.ReadLine();
@@ -146,54 +128,49 @@ namespace Admin_Jardim
                 Console.Write("Equipa de remocao: ");
                 arvore.EquipeRemocao = Console.ReadLine();
 
-                if (canteiro != null) { context.AdicionarArvoreCanteiro(arvore); }
-                else { context.AdicionarArvoreJardim(arvore); }
+                IEnumerable<Arvore> mesmaLocalizacao = context.arvores.Where(j => j.Localizacao.ToLower() == arvore.Localizacao.ToLower());
 
-                Console.WriteLine("Arvore adicionado com sucesso!");
-            }catch (Exception ex)
+                if (mesmaLocalizacao.Count() > 0)
+                    throw new ArgumentException("Já existe um jardim com esta localização.");
+
+                if (arvore.Canteiro != null) 
+                { 
+                    context.AdicionarArvoreCanteiro(arvore); 
+                }
+                else 
+                { 
+                    context.AdicionarArvoreJardim(arvore); 
+                }
+
+                Console.WriteLine("Arvore adicionada com sucesso!");
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            
         }
 
         private void Deletar()
         {
-            int escolha = -1;
-            while (escolha == -1)
-            {
-                int selecionado = new MenuSelecionar<Arvore>(context.arvores, a => a.Especie + " - " + a.Jardim.Localizacao, "arvore").Main();
-                if (selecionado < context.arvores.Count)
-                {
-                    escolha = selecionado;
-                }
-                else { Console.WriteLine("Essa opcao nao existe, escolha novamente"); }
-                
-            }
+            int escolha = new MenuSelecionar<Arvore>(context.arvores, nomeArvoreNaSelecao, "arvore").Main(loop: true);
             context.arvores.RemoveAt(escolha);
-            Console.WriteLine("Arvore removido com sucesso!");
+
+            Console.WriteLine("Arvore removida com sucesso!");
         }
 
         private void Editar()
         {
             try
             {
-                int escolha = -1;
-                while (escolha == -1)
-                {
-                    int selecionado = new MenuSelecionar<Arvore>(context.arvores, a => a.Especie + " - " + a.Canteiro.Localizacao, "arvore").Main();
-                    if (selecionado < context.arvores.Count)
-                    {
-                        escolha = selecionado;
-                    }
-                    else { Console.WriteLine("Essa opcao nao existe, escolha novamente"); }
+                int escolha = new MenuSelecionar<Arvore>(context.arvores, nomeArvoreNaSelecao, "arvore").Main(loop: true);
 
-                }
                 Arvore arvore = new Arvore();
-
 
                 Console.Write("Especie: ");
                 arvore.Especie = Console.ReadLine();
+
+                Console.Write("Localização: ");
+                arvore.Localizacao = Console.ReadLine();
 
                 Console.Write("Altura: ");
                 arvore.Altura = float.Parse(Console.ReadLine());
@@ -204,43 +181,24 @@ namespace Admin_Jardim
                 Console.Write("Idade: ");
                 arvore.Idade = int.Parse(Console.ReadLine());
 
-
                 Console.Write("Historico de tratamento: ");
                 arvore.HistoricoTratamentos.Add(Console.ReadLine());
 
                 Console.Write("Condicao de saude: ");
                 arvore.CondicaoSaude = Console.ReadLine();
 
-                int escolhaCanteiro = -1;
-                while (escolhaCanteiro == -1)
+                int escolhaCanteiro = new MenuSelecionar<Canteiro>(context.canteiros, a => a.Localizacao, "canteiro").Main(loop: true, permiteNulo: true);
+
+                if (escolhaCanteiro != MenuSelecionar<Canteiro>.NENHUM)
                 {
-                    int selecionado = new MenuSelecionar<Canteiro>(context.canteiros, a => a.Localizacao, "canteiro").Main();
-                    if (selecionado < context.canteiros.Count)
-                    {
-                        escolhaCanteiro = selecionado;
-                    }
-                    else { Console.WriteLine("Essa opcao nao existe, escolha novamente"); }
-                }
-                arvore.Canteiro = context.canteiros[escolhaCanteiro];
-                if (arvore.Canteiro == null)
-                {
-                    int escolhaJardim = -1;
-                    while (escolhaJardim == -1)
-                    {
-                        int selecionado = new MenuSelecionar<Jardim>(context.jardins, a => a.Nome, "jardim").Main();
-                        if (selecionado < context.jardins.Count)
-                        {
-                            escolhaJardim = selecionado;
-                        }
-                        else { Console.WriteLine("Essa opcao nao existe, escolha novamente"); }
-                    }
-                    arvore.Jardim = context.jardins[escolhaJardim];
+                    arvore.Canteiro = context.canteiros[escolhaCanteiro];
+                    arvore.Jardim = arvore.Canteiro.Jardim;
                 }
                 else
                 {
-                    arvore.Jardim = arvore.Canteiro.Jardim;
+                    int escolhaJardim = new MenuSelecionar<Jardim>(context.jardins, a => a.Nome, "jardim").Main(loop: true);
+                    arvore.Jardim = context.jardins[escolhaJardim];
                 }
-
 
 
                 Console.Write("Notas adicionais: ");
@@ -256,13 +214,19 @@ namespace Admin_Jardim
                 arvore.EquipePlantio = Console.ReadLine();
 
                 Console.Write("Data de fim (DD/MM/YYYY): ");
-                if (Console.ReadLine() != "")
+                string dataRemocao = Console.ReadLine();
+                if (dataRemocao != "")
                 {
-                    arvore.DataRemocao = Convert.ToDateTime(Console.ReadLine());
+                    arvore.DataRemocao = Convert.ToDateTime(dataRemocao);
                 }
 
                 Console.Write("Equipa de remocao: ");
                 arvore.EquipeRemocao = Console.ReadLine();
+
+                IEnumerable<Arvore> mesmaLocalizacao = context.arvores.Where(j => j.Localizacao.ToLower() == arvore.Localizacao.ToLower());
+
+                if (mesmaLocalizacao.Count() > 0)
+                    throw new ArgumentException("Já existe um jardim com esta localização.");
 
                 context.EditarArvore(context.arvores[escolha], arvore);
 

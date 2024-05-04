@@ -257,7 +257,8 @@ namespace Admin_Jardim
                   $"---\n"
                 + $"Especie: {Especie}\n"
                 + $"Altura: {Altura}\n"
-                + $"Idade: {Idade}\n";
+                + $"Idade: {Idade}\n"
+                + $"Localizacao: {Localizacao}\n";
         }
     }
 }
