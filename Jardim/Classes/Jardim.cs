@@ -19,7 +19,6 @@ namespace Admin_Jardim
         private string caracteristicasCanteiros = "";
         private List<Canteiro> canteiros = new List<Canteiro>();
         private List<Arvore> arvores = new List<Arvore>();
-        private static HashSet<string> nomesExistem = new HashSet<string>();
 
         public string Id
         {
@@ -38,11 +37,7 @@ namespace Admin_Jardim
                 if (value.Length > 128)
                     throw new ArgumentException("O nome do jardim não pode ter mais de 128 caracteres.");
 
-                if (nomesExistem.Contains(value))
-                    throw new ArgumentException("Já existe um jardim com este nome.");
-
                 nome = value;
-                nomesExistem.Add(value);
             }
         }
 

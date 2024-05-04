@@ -86,9 +86,11 @@ namespace Admin_Jardim
                     if (selecionado < context.jardins.Count)
                     {
                         escolha = selecionado;
-                    }
-                
-                    Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                    } 
                 }
 
                 context.jardins[escolha] = LerJardim(context.jardins[escolha]);
@@ -127,6 +129,10 @@ namespace Admin_Jardim
             string equipaResponsavel = new MenuCampo<Jardim>("Equipa Responsável", j => j.EquipaResponsavel, jardimInicial).Main(); ;
             string caracteristicaCanteiros = new MenuCampo<Jardim>("Característica Canteiros", j => j.CaracteristicasCanteiros, jardimInicial).Main(); ;
 
+            IEnumerable<Jardim> mesmoNome = context.jardins.Where(j => j.Nome.ToLower() == nome.ToLower());
+
+            if (mesmoNome.Count() > 0)
+               throw new ArgumentException("Já existe um jardim com este nome.");
 
             Jardim jardim = new Jardim
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,9 @@ namespace Admin_Jardim
     {
         private string id;
         private string especie;
-        private double altura;
-        private double diametroTronco;
-        private int idade;
+        private double altura = 0;
+        private double diametroTronco = 0;
+        private int idade = 0;
         private Jardim jardim;
         private List<string> historicoTratamentos;
         private string condicaoSaude;
@@ -23,6 +24,7 @@ namespace Admin_Jardim
         private string equipePlantio;
         private DateTime? dataRemocao;
         private string equipeRemocao;
+        private string localizacao;
 
         public Arvore()
         {
@@ -215,6 +217,20 @@ namespace Admin_Jardim
             historicoTratamentos = vTratamentos;
         }
 
+
+        public string Localizacao
+        {
+            get { return localizacao; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("A localização da árvore não pode estar vazia.");
+
+                localizacao = value;
+            }
+        }
+
+
         public void Apagar()
         {
             string id = "";
@@ -232,6 +248,7 @@ namespace Admin_Jardim
             string equipePlantio = "";
             DateTime dataRemocao = new DateTime();
             string equipeRemocao = "";
+            string localizacao = "";
     }
 
         public override string ToString()
