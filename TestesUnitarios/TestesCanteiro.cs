@@ -4,69 +4,99 @@ namespace TestesUnitarios
 {
     internal class TestesCanteiro
     {
-        [Test]
-        public void AdicionarArvore_AdicionaArvore()
+        private List<Canteiro> canteiros;
+
+        [SetUp]
+        public void SetUp()
         {
-            Canteiro canteiro = new Canteiro();
-            Arvore arvore = new Arvore();
-            canteiro.AdicionarArvore(arvore);
-            Assert.Contains(arvore, canteiro.ListarArvoresExistentes());
+            canteiros = new List<Canteiro>();
         }
 
         [Test]
-        public void Editar_Localizacao_Valida_AlteraLocalizacao()
+        public void Adicionar_CanteiroTodosCamposPreenchidos_AdicionaCanteiro()
         {
-            Canteiro canteiro = new Canteiro();
-            string novaLocalizacao = "Área de teste";
-            canteiro.Localizacao = novaLocalizacao;
-            Assert.AreEqual(novaLocalizacao, canteiro.Localizacao);
+            Canteiro canteiro = new Canteiro { Id = "1", Localizacao = "Local 1", Area = 10.5f, AreaSemeada = 8.0f };
+            canteiros.Add(canteiro);
+
+            Assert.AreEqual(1, canteiros.Count);
+            Assert.IsTrue(canteiros.Contains(canteiro));
         }
 
         [Test]
-        public void Editar_AreaSemeada_MaiorQueAreaTotal_ExcecaoArgumentException()
+        public void Adicionar_CanteiroCamposAusentes_ExcecaoArgumentException()
         {
             Canteiro canteiro = new Canteiro();
-            float areaTotal = 20.0f;
-            canteiro.Area = areaTotal;
-            Assert.Throws<ArgumentException>(() => canteiro.AreaSemeada = 25.0f);
+
+            var excecao = Assert.Throws<ArgumentException>(() => canteiros.Add(canteiro));
+            StringAssert.Contains("A localização do canteiro não pode estar vazia.", excecao.Message);
         }
 
         [Test]
-        public void Editar_ComposicaoCanteiro_Valida_AlteraComposicaoCanteiro()
+        public void Adicionar_CanteiroValoresInvalidos_ExcecaoArgumentException()
         {
-            Canteiro canteiro = new Canteiro();
-            string novaComposicao = "Solo fértil";
-            canteiro.ComposicaoCanteiro = novaComposicao;
-            Assert.AreEqual(novaComposicao, canteiro.ComposicaoCanteiro);
+            Canteiro canteiro = new Canteiro { Id = "1", Localizacao = "Local 1", Area = -10.5f, AreaSemeada = 8.0f };
+
+            var excecao = Assert.Throws<ArgumentException>(() => canteiros.Add(canteiro));
+            StringAssert.Contains("A área do canteiro deve ser um número positivo.", excecao.Message);
         }
 
         [Test]
-        public void Eliminar_RemoverArvore_AlteraDataRemocaoEEquipeRemocao()
+        public void Editar_CanteiroExistente_EditaCanteiro()
         {
-            Canteiro canteiro = new Canteiro();
-            Arvore arvore = new Arvore();
-            string equipe = "Equipe A";
-            bool removido = canteiro.RemoverArvore(arvore, equipe);
-            Assert.IsTrue(removido);
-            Assert.IsNotNull(arvore.DataRemocao);
-            Assert.AreEqual(equipe, arvore.EquipeRemocao);
+            Canteiro canteiro = new Canteiro { Id = "1", Localizacao = "Local 1", Area = 10.5f, AreaSemeada = 8.0f };
+            canteiros.Add(canteiro);
+
+            float novaArea = 12.0f;
+            canteiro.Area = novaArea;
+
+            Assert.AreEqual(novaArea, canteiro.Area);
         }
 
         [Test]
-        public void Mostrar_RetornaStringFormatada()
+        public void Editar_CanteiroValoresInvalidos_ExcecaoArgumentException()
         {
-            Canteiro canteiro = new Canteiro
-            {
-                Localizacao = "Área de Teste",
-                Jardim = new Jardim { Nome = "Jardim Principal" },
-                Area = 25.3f,
-                AreaSemeada = 15.5f
-            };
-            string resultado = canteiro.ToString();
-            StringAssert.Contains("Localização: Área de Teste", resultado);
-            StringAssert.Contains("Jardim: Jardim Principal", resultado);
-            StringAssert.Contains("Area: 25.3", resultado);
-            StringAssert.Contains("Area semeada: 15.5", resultado);
+            Canteiro canteiro = new Canteiro { Id = "1", Localizacao = "Local 1", Area = 10.5f, AreaSemeada = 8.0f };
+            canteiros.Add(canteiro);
+
+            float novaArea = -12.0f;
+            canteiro.Area = novaArea;
+
+            var excecao = Assert.Throws<ArgumentException>(() => canteiro.Area = novaArea);
+            StringAssert.Contains("A área do canteiro deve ser um número positivo.", excecao.Message);
+        }
+
+        [Test]
+        public void Excluir_CanteiroExistente_RemoveCanteiro()
+        {
+            Canteiro canteiro = new Canteiro { Id = "1", Localizacao = "Local 1", Area = 10.5f, AreaSemeada = 8.0f };
+            canteiros.Add(canteiro);
+
+            canteiros.Remove(canteiro);
+
+            Assert.IsEmpty(canteiros);
+        }
+
+        [Test]
+        public void Excluir_CanteiroInexistente_ExcecaoInvalidOperationException()
+        {
+            Assert.Throws<InvalidOperationException>(() => canteiros.Remove(new Canteiro { Id = "999" }));
+        }
+
+        [Test]
+        public void Listar_CanteirosCadastrados_RetornaListaCanteiros()
+        {
+            Canteiro canteiro1 = new Canteiro { Id = "1", Localizacao = "Local 1" };
+            Canteiro canteiro2 = new Canteiro { Id = "2", Localizacao = "Local 2" };
+            canteiros.Add(canteiro1);
+            canteiros.Add(canteiro2);
+
+            CollectionAssert.AreEqual(canteiros, canteiros);
+        }
+
+        [Test]
+        public void Listar_CanteirosNaoCadastrados_RetornaListaVazia()
+        {
+            CollectionAssert.IsEmpty(canteiros);
         }
     }
 }

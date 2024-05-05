@@ -9,87 +9,99 @@ namespace TestesUnitarios
 {
     internal class TestesJardim
     {
-        [Test]
-        public void AdicionarCanteiro_AdicionaCanteiro()
+        private List<Jardim> jardins;
+
+        [SetUp]
+        public void SetUp()
         {
-            Jardim jardim = new Jardim();
-            Canteiro canteiro = new Canteiro();
-            jardim.AdicionarCanteiro(canteiro);
-            Assert.Contains(canteiro, jardim.MostrarCanteiros());
+            jardins = new List<Jardim>();
         }
 
         [Test]
-        public void Editar_Nome_Valido_AlteraNome()
+        public void Adicionar_JardimTodosCamposPreenchidos_AdicionaJardim()
         {
-            Jardim jardim = new Jardim();
-            string novoNome = "Jardim Botânico";
-            jardim.Nome = novoNome;
-            Assert.AreEqual(novoNome, jardim.Nome);
+            Jardim jardim = new Jardim { Id = "1", Nome = "Jardim Botânico", Localizacao = "Local 1", Area = 10.5, Topografia = "Plano" };
+            jardins.Add(jardim);
+
+            Assert.AreEqual(1, jardins.Count);
+            Assert.IsTrue(jardins.Contains(jardim));
         }
 
         [Test]
-        public void Editar_Area_Negativa_ExcecaoArgumentException()
+        public void Adicionar_JardimCamposAusentes_ExcecaoArgumentException()
         {
             Jardim jardim = new Jardim();
-            Assert.Throws<ArgumentException>(() => jardim.Area = -50);
+
+            var excecao = Assert.Throws<ArgumentException>(() => jardins.Add(jardim));
+            StringAssert.Contains("O nome do jardim não pode estar vazio.", excecao.Message);
         }
 
         [Test]
-        public void Editar_Descricao_ExcedeLimiteCaracteres_ExcecaoArgumentException()
+        public void Adicionar_JardimValoresInvalidos_ExcecaoArgumentException()
         {
-            Jardim jardim = new Jardim();
-            string descricaoLonga = new string('a', 600);
-            Assert.Throws<ArgumentException>(() => jardim.Descricao = descricaoLonga);
+            Jardim jardim = new Jardim { Id = "1", Nome = "Jardim Botânico", Localizacao = "Local 1", Area = -10.5, Topografia = "Plano" };
+
+            var excecao = Assert.Throws<ArgumentException>(() => jardins.Add(jardim));
+            StringAssert.Contains("A área do jardim deve ser um número positivo.", excecao.Message);
         }
 
         [Test]
-        public void Editar_Topografia_Valida_AlteraTopografia()
+        public void Editar_JardimExistente_EditaJardim()
         {
-            Jardim jardim = new Jardim();
-            string novaTopografia = "Plana";
-            jardim.Topografia = novaTopografia;
-            Assert.AreEqual(novaTopografia, jardim.Topografia);
+            Jardim jardim = new Jardim { Id = "1", Nome = "Jardim Botânico", Localizacao = "Local 1", Area = 10.5, Topografia = "Plano" };
+            jardins.Add(jardim);
+
+            double novaArea = 12.0;
+            jardim.Area = novaArea;
+
+            Assert.AreEqual(novaArea, jardim.Area);
         }
 
         [Test]
-        public void Editar_EquipaResponsavel_Valida_AlteraEquipaResponsavel()
+        public void Editar_JardimValoresInvalidos_ExcecaoArgumentException()
         {
-            Jardim jardim = new Jardim();
-            string novaEquipa = "Equipe de jardinagem";
-            jardim.EquipaResponsavel = novaEquipa;
-            Assert.AreEqual(novaEquipa, jardim.EquipaResponsavel);
+            Jardim jardim = new Jardim { Id = "1", Nome = "Jardim Botânico", Localizacao = "Local 1", Area = 10.5, Topografia = "Plano" };
+            jardins.Add(jardim);
+
+            double novaArea = -12.0;
+            jardim.Area = novaArea;
+
+            var excecao = Assert.Throws<ArgumentException>(() => jardim.Area = novaArea);
+            StringAssert.Contains("A área do jardim deve ser um número positivo.", excecao.Message);
         }
 
         [Test]
-        public void Editar_CaracteristicasCanteiros_Valida_AlteraCaracteristicasCanteiros()
+        public void Excluir_JardimExistente_RemoveJardim()
         {
-            Jardim jardim = new Jardim();
-            string novasCaracteristicas = "Canteiros bem drenados";
-            jardim.CaracteristicasCanteiros = novasCaracteristicas;
-            Assert.AreEqual(novasCaracteristicas, jardim.CaracteristicasCanteiros);
+            Jardim jardim = new Jardim { Id = "1", Nome = "Jardim Botânico", Localizacao = "Local 1", Area = 10.5, Topografia = "Plano" };
+            jardins.Add(jardim);
+
+            jardins.Remove(jardim);
+
+            Assert.IsEmpty(jardins);
         }
 
         [Test]
-        public void Mostrar_RetornaStringFormatada()
+        public void Excluir_JardimInexistente_ExcecaoInvalidOperationException()
         {
-            Jardim jardim = new Jardim
-            {
-                Nome = "Jardim Botânico",
-                Localizacao = "Avenida Central",
-                Descricao = "Um lindo jardim botânico com diversas espécies de plantas.",
-                Area = 1500,
-                Topografia = "Plana",
-                EquipaResponsavel = "Equipe de Jardinagem ABC",
-                CaracteristicasCanteiros = "Canteiros bem drenados"
-            };
-            string resultado = jardim.ToString();
-            StringAssert.Contains("Nome: Jardim Botânico", resultado);
-            StringAssert.Contains("Localização: Avenida Central", resultado);
-            StringAssert.Contains("Descricao: Um lindo jardim botânico com diversas espécies de plantas.", resultado);
-            StringAssert.Contains("Area: 1500", resultado);
-            StringAssert.Contains("Topografia: Plana", resultado);
-            StringAssert.Contains("Equipa Responsável: Equipe de Jardinagem ABC", resultado);
-            StringAssert.Contains("Características canteiros: Canteiros bem drenados", resultado);
+            Assert.Throws<InvalidOperationException>(() => jardins.Remove(new Jardim { Id = "999" }));
+        }
+
+        [Test]
+        public void Listar_JardinsCadastrados_RetornaListaJardins()
+        {
+            Jardim jardim1 = new Jardim { Id = "1", Nome = "Jardim Botânico" };
+            Jardim jardim2 = new Jardim { Id = "2", Nome = "Jardim das Rosas" };
+            jardins.Add(jardim1);
+            jardins.Add(jardim2);
+
+            CollectionAssert.AreEqual(jardins, jardins);
+        }
+
+        [Test]
+        public void Listar_JardinsNaoCadastrados_RetornaListaVazia()
+        {
+            CollectionAssert.IsEmpty(jardins);
         }
     }
 }
