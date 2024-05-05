@@ -16,7 +16,7 @@ namespace TestesUnitarios
         {
             jardins = new List<Jardim>();
         }
-
+        //3.1
         [Test]
         public void Adicionar_JardimTodosCamposPreenchidos_AdicionaJardim()
         {
@@ -26,7 +26,7 @@ namespace TestesUnitarios
             Assert.AreEqual(1, jardins.Count);
             Assert.IsTrue(jardins.Contains(jardim));
         }
-
+        //3.1
         [Test]
         public void Adicionar_JardimCamposAusentes_ExcecaoArgumentException()
         {
@@ -35,7 +35,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => jardins.Add(jardim));
             StringAssert.Contains("O nome do jardim não pode estar vazio.", excecao.Message);
         }
-
+        //3.1
         [Test]
         public void Adicionar_JardimValoresInvalidos_ExcecaoArgumentException()
         {
@@ -44,7 +44,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => jardins.Add(jardim));
             StringAssert.Contains("A área do jardim deve ser um número positivo.", excecao.Message);
         }
-
+        //3.2
         [Test]
         public void Editar_JardimExistente_EditaJardim()
         {
@@ -56,7 +56,7 @@ namespace TestesUnitarios
 
             Assert.AreEqual(novaArea, jardim.Area);
         }
-
+        //3.2
         [Test]
         public void Editar_JardimValoresInvalidos_ExcecaoArgumentException()
         {
@@ -69,7 +69,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => jardim.Area = novaArea);
             StringAssert.Contains("A área do jardim deve ser um número positivo.", excecao.Message);
         }
-
+        //3.3
         [Test]
         public void Excluir_JardimExistente_RemoveJardim()
         {
@@ -80,7 +80,7 @@ namespace TestesUnitarios
 
             Assert.IsEmpty(jardins);
         }
-
+        //3.3
         [Test]
         public void Excluir_JardimInexistente_ExcecaoInvalidOperationException()
         {

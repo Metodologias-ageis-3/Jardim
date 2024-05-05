@@ -13,7 +13,7 @@ namespace TestesUnitarios
         {
             arvores = new List<Arvore>();
         }
-
+        //2.1
         [Test]
         public void Adicionar_ArvoreTodosCamposPreenchidos_AdicionaArvore()
         {
@@ -23,7 +23,7 @@ namespace TestesUnitarios
             Assert.AreEqual(1, arvores.Count);
             Assert.IsTrue(arvores.Contains(arvore));
         }
-
+        //2.1
         [Test]
         public void Adicionar_ArvoreCamposAusentes_ExcecaoArgumentException()
         {
@@ -32,7 +32,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => arvores.Add(arvore));
             StringAssert.Contains("O ID da árvore nao pode estar vazio.", excecao.Message);
         }
-
+        //2.1
         [Test]
         public void Adicionar_ArvoreValoresInvalidos_ExcecaoArgumentException()
         {
@@ -41,7 +41,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => arvores.Add(arvore));
             StringAssert.Contains("A altura da árvore deve ser um número positivo.", excecao.Message);
         }
-
+        //2.2
         [Test]
         public void Editar_ArvoreExistente_EditaArvore()
         {
@@ -53,7 +53,7 @@ namespace TestesUnitarios
 
             Assert.AreEqual(novaAltura, arvore.Altura);
         }
-
+        //2.2
         [Test]
         public void Editar_ArvoreValoresInvalidos_ExcecaoArgumentException()
         {
@@ -66,7 +66,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => arvore.Altura = novaAltura);
             StringAssert.Contains("A altura da árvore deve ser um número positivo.", excecao.Message);
         }
-
+        //2.3
         [Test]
         public void Excluir_ArvoreExistente_RemoveArvore()
         {
@@ -77,7 +77,7 @@ namespace TestesUnitarios
 
             Assert.IsEmpty(arvores);
         }
-
+        //2.3
         [Test]
         public void Excluir_ArvoreInexistente_ExcecaoInvalidOperationException()
         {

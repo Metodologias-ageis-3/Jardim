@@ -11,7 +11,7 @@ namespace TestesUnitarios
         {
             canteiros = new List<Canteiro>();
         }
-
+        //1.1
         [Test]
         public void Adicionar_CanteiroTodosCamposPreenchidos_AdicionaCanteiro()
         {
@@ -21,7 +21,7 @@ namespace TestesUnitarios
             Assert.AreEqual(1, canteiros.Count);
             Assert.IsTrue(canteiros.Contains(canteiro));
         }
-
+        //1.1
         [Test]
         public void Adicionar_CanteiroCamposAusentes_ExcecaoArgumentException()
         {
@@ -30,7 +30,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => canteiros.Add(canteiro));
             StringAssert.Contains("A localização do canteiro não pode estar vazia.", excecao.Message);
         }
-
+        //1.1
         [Test]
         public void Adicionar_CanteiroValoresInvalidos_ExcecaoArgumentException()
         {
@@ -39,7 +39,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => canteiros.Add(canteiro));
             StringAssert.Contains("A área do canteiro deve ser um número positivo.", excecao.Message);
         }
-
+        //1.2
         [Test]
         public void Editar_CanteiroExistente_EditaCanteiro()
         {
@@ -51,7 +51,7 @@ namespace TestesUnitarios
 
             Assert.AreEqual(novaArea, canteiro.Area);
         }
-
+        //1.2
         [Test]
         public void Editar_CanteiroValoresInvalidos_ExcecaoArgumentException()
         {
@@ -64,7 +64,7 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => canteiro.Area = novaArea);
             StringAssert.Contains("A área do canteiro deve ser um número positivo.", excecao.Message);
         }
-
+        //1.3
         [Test]
         public void Excluir_CanteiroExistente_RemoveCanteiro()
         {
@@ -75,13 +75,13 @@ namespace TestesUnitarios
 
             Assert.IsEmpty(canteiros);
         }
-
+        //1.3
         [Test]
         public void Excluir_CanteiroInexistente_ExcecaoInvalidOperationException()
         {
             Assert.Throws<InvalidOperationException>(() => canteiros.Remove(new Canteiro { Id = "999" }));
         }
-
+        //1.3
         [Test]
         public void Listar_CanteirosCadastrados_RetornaListaCanteiros()
         {
