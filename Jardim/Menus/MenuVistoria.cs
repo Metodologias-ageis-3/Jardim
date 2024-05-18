@@ -21,7 +21,8 @@ namespace Admin_Jardim
             {
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Realizar vistoria");
-                Console.WriteLine("2. Voltar\n");
+                Console.WriteLine("2. Listar vistorias");
+                Console.WriteLine("3. Voltar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
 
@@ -31,6 +32,9 @@ namespace Admin_Jardim
                         RealizarVistoria();
                         break;
                     case 2:
+                        ListarVistorias();
+                        break;
+                    case 3:
                         return true;
                 }
 
@@ -84,6 +88,14 @@ namespace Admin_Jardim
             catch (Exception ex)
             {
                 Console.WriteLine("Erro ao realizar vistoria: " + ex.Message);
+            }
+        }
+
+        private void ListarVistorias()
+        {
+            foreach (Vistoria vistoria in context.vistorias)
+            {
+                Console.WriteLine(vistoria);
             }
         }
     }
