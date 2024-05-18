@@ -249,7 +249,12 @@ namespace Admin_Jardim
             DateTime dataRemocao = new DateTime();
             string equipeRemocao = "";
             string localizacao = "";
-    }
+        }
+
+        public string Nome
+        {
+            get { return $"Especie: {Especie}, Altura: {Altura}, Idade: {Idade}, Localizacao: {Localizacao}"; }
+        }
 
         public override string ToString()
         {

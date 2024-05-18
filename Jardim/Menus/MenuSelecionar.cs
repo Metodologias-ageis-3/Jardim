@@ -13,13 +13,15 @@ namespace Admin_Jardim
 
         private List<T> itens;
         private string titulo;
+        private string artigo;
         private Func<T, string> getField;
 
-        public MenuSelecionar(List<T> itens, Func<T, string> getField, string titulo = "item") 
+        public MenuSelecionar(List<T> itens, Func<T, string> getField, string titulo = "item", string artigo = "um") 
         { 
             this.itens = itens;
             this.titulo = titulo;
             this.getField = getField;
+            this.artigo = artigo;
         }
 
         public int Main(bool loop = false, bool permiteNulo = false)
@@ -53,7 +55,7 @@ namespace Admin_Jardim
                 Console.WriteLine($"{i + 1} {getField(itens[i])}");
             }
 
-            Console.Write($"Escolha um {titulo}: ");
+            Console.Write($"Escolha {artigo} {titulo}: ");
 
             string raw = Console.ReadLine();
 

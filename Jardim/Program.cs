@@ -19,7 +19,8 @@ namespace Admin_Jardim
                 Console.WriteLine("1. Administrar jardins");
                 Console.WriteLine("2. Administrar canteiros");
                 Console.WriteLine("3. Administrar árvores");
-                Console.WriteLine("4. Sair");
+                Console.WriteLine("4. Administrar vistorias");
+                Console.WriteLine("5. Sair");
 
                 string entrada = Console.ReadLine();
 
@@ -35,7 +36,7 @@ namespace Admin_Jardim
                         new MenuArvore(context).Main();
                         break;
                     case "4":
-                        Console.WriteLine("Não implementado!");
+                        new MenuVistoria(context).Main();
                         break;
                     case "5":
                         Environment.Exit(0);

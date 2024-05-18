@@ -92,7 +92,7 @@ namespace TestesUnitarios
             arvores.Add(arvore1);
             arvores.Add(arvore2);
 
-            CollectionAssert.AreEqual(arvores, arvores);
+            CollectionAssert.AreEqual(arvores, new List<Arvore>());
         }
         //2.11
         [Test]

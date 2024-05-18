@@ -13,6 +13,7 @@ namespace Admin_Jardim
         public List<Jardim> jardins;
         public List<Canteiro> canteiros;
         public List<Arvore> arvores;
+        public List<Vistoria> vistorias;
 
         public Context(bool populate = false)
         {
@@ -25,6 +26,7 @@ namespace Admin_Jardim
             jardins = new List<Jardim>();
             canteiros = new List<Canteiro>();
             arvores = new List<Arvore>();
+            vistorias = new List<Vistoria>();
         }
 
         private void Populate()
@@ -92,6 +94,7 @@ namespace Admin_Jardim
                     Localizacao = "123"
                 }
             };
+            vistorias = new List<Vistoria>();
 
             canteiros[1].AdicionarArvore(arvores[0]);
             jardins[0].AdicionarCanteiro(canteiros[0]);
@@ -114,6 +117,11 @@ namespace Admin_Jardim
         {
             arvores.Add(arvore);
             arvore.Jardim.AdicionarArvore(arvore);
+        }
+
+        public void AdicionarVistoria(Vistoria vistoria)
+        {
+            vistorias.Add(vistoria);
         }
 
         public void EditarArvore(Arvore arvore, Arvore arvoreNova) { 
