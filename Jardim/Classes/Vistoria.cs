@@ -8,6 +8,39 @@ namespace Admin_Jardim
 {
     internal class Vistoria
     {
+        static public List<string> SINTOMAS = new List<string> {
+            "Inclinação Tronco",
+            "Codominância Tronco",
+            "Codominância Ramos",
+            "Casca Inclusa Tronco",
+            "Casca Inclusa Ramos",
+            "Fendas / Fissuras Colo",
+            "Fendas / Fissuras Tronco",
+            "Fendas / Fissuras Ramos",
+            "Torção Tronco",
+            "Fendas / Cicatrizes Colo",
+            "Fendas / Cicatrizes Tronco",
+            "Fendas / Cicatrizes Ramos",
+            "Podridão Colo",
+            "Podridão Tronco",
+            "Podridão Ramos",
+            "Cavidades Colo",
+            "Cavidades Tronco",
+            "Cavidades Ramos",
+            "Estruturas Fungos Colo",
+            "Estruturas Fungos Tronco",
+            "Estruturas Fungos Ramos",
+            "Exsudações Colo",
+            "Exsudações Tronco",
+            "Exsudações Ramos",
+            "Madeira morta Ramos",
+            "Cancros Tronco",
+            "Cancros Ramos",
+            "Rebentos ladrões / Epicórmicos",
+            "Pragas Tronco",
+            "Pragas Ramos"
+        };
+
         private DateTime dataVistoria;
         private double alturaEstimada;
         private double diametroTronco;
