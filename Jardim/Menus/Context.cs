@@ -92,9 +92,63 @@ namespace Admin_Jardim
                     EquipeRemocao = "",
                     DataPlantio = Convert.ToDateTime("12/05/2023"),
                     Localizacao = "123"
+                },
+
+                new Arvore {
+                    Id = Guid.NewGuid().ToString(),
+                    Especie = "teste2",
+                    Altura = 5,
+                    DiametroTronco = 5,
+                    Idade = 5,
+                    Canteiro = canteiros[1],
+                    CondicaoSaude = "teste2",
+                    NotasAdicionais = "",
+                    QuantidadeAguaConsumida = 5,
+                    EquipePlantio = "azul",
+                    EquipeRemocao = "",
+                    DataPlantio = Convert.ToDateTime("12/05/1982"),
+                    Localizacao = "111"
                 }
             };
-            vistorias = new List<Vistoria>();
+            vistorias = new List<Vistoria> { 
+                new Vistoria
+                {
+                    DataVistoria = Convert.ToDateTime("12/05/2023"),
+                    AlturaEstimada = 10,
+                    DiametroCopa = 10,
+                    DiametroTronco = 10,
+                    Sintomas = new Dictionary<string, int> { 
+                        { Vistoria.SINTOMAS[0], 2 },
+                        { Vistoria.SINTOMAS[1], 3 },
+                    },
+                    Arvore = arvores[0]
+                },
+
+                new Vistoria
+                {
+                    DataVistoria = Convert.ToDateTime("12/05/2025"),
+                    AlturaEstimada = 11,
+                    DiametroCopa = 12,
+                    DiametroTronco = 12,
+                    Sintomas = new Dictionary<string, int> {
+                        { Vistoria.SINTOMAS[0], 3 },
+                        { Vistoria.SINTOMAS[1], 1 },
+                    },
+                    Arvore = arvores[0]
+                },
+
+                new Vistoria
+                {
+                    DataVistoria = Convert.ToDateTime("12/05/2025"),
+                    AlturaEstimada = 11,
+                    DiametroCopa = 12,
+                    DiametroTronco = 12,
+                    Sintomas = new Dictionary<string, int> {
+                        { Vistoria.SINTOMAS[0], 3 },
+                    },
+                    Arvore = arvores[1]
+                }
+            };
 
             canteiros[1].AdicionarArvore(arvores[0]);
             jardins[0].AdicionarCanteiro(canteiros[0]);

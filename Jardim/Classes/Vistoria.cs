@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Admin_Jardim
 {
@@ -116,6 +117,16 @@ namespace Admin_Jardim
             {
                 DataVistoria = DateTime.Now;
             }
+        }
+
+        public override string ToString()
+        {
+            return
+                  "---\n"
+                + $"Data: {DataVistoria:dd/MM/yyyy}\n"
+                + $"Altura Estimada: {AlturaEstimada:F2}\n"
+                + $"Diâmetro do tronco: {DiametroTronco:F2}\n"
+                + $"Diâmetro da copa: {DiametroCopa:F2}\n";
         }
     }
 }

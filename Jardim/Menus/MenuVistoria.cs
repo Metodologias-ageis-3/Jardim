@@ -93,9 +93,25 @@ namespace Admin_Jardim
 
         private void ListarVistorias()
         {
-            foreach (Vistoria vistoria in context.vistorias)
+            var arvoreById = context.arvores.ToDictionary(a => a.Id, a => a);
+            var result = context.vistorias.GroupBy(v => v.Arvore.Id, v => v);
+
+            foreach (IGrouping<string, Vistoria> vistoriaGroup in result)
             {
-                Console.WriteLine(vistoria);
+                Arvore arvore = arvoreById[vistoriaGroup.Key];
+                string a = arvore.ToString();
+
+                Console.Write(
+                    "---\n"
+                    + $"Árvore:\n{a}\n"
+                    + "  Vistorias\n"
+                );
+
+                foreach (Vistoria vistoria in vistoriaGroup)
+                {
+                    string v = string.Join("\n", vistoria.ToString().Split('\n').Select(s => $"  {s}"));
+                    Console.WriteLine(v);
+                }
             }
         }
     }
