@@ -253,7 +253,7 @@ namespace Admin_Jardim
 
         public string Nome
         {
-            get { return $"Especie: {Especie}, Altura: {Altura}, Idade: {Idade}, Localizacao: {Localizacao}"; }
+            get { return ToString().Replace('\n', ' ').Replace("---",""); }
         }
 
         public override string ToString()

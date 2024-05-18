@@ -42,12 +42,25 @@ namespace Admin_Jardim
             "Pragas Ramos"
         };
 
+        private string id;
         private DateTime dataVistoria;
         private double alturaEstimada;
         private double diametroTronco;
         private double diametroCopa;
         private Dictionary<string, int> sintomas = new Dictionary<string, int>();
         private Arvore arvore;
+
+        public string Id
+        {
+            get { return id; }
+            set
+            {
+                if (value == "")
+                    throw new ArgumentException("O ID da árvore nao pode estar vazio.");
+
+                id = value;
+            }
+        }
 
         public DateTime DataVistoria
         {
@@ -117,6 +130,11 @@ namespace Admin_Jardim
             {
                 DataVistoria = DateTime.Now;
             }
+        }
+
+        public string Nome
+        {
+            get { return ToString().Replace('\n', ' ').Replace("---", ""); }
         }
 
         public override string ToString()

@@ -11,10 +11,10 @@ namespace Admin_Jardim
         private Context context;
         private Dictionary<string, int> sintomas;
 
-        public MenuSintomas(Context context = null)
+        public MenuSintomas(Dictionary<string, int> sintomas = null , Context context = null)
         {
             this.context = context;
-            this.sintomas = new Dictionary<string, int>();
+            this.sintomas = sintomas == null ? new Dictionary<string, int>() : sintomas;
         }
 
         public bool Main()

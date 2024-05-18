@@ -22,7 +22,9 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1. Realizar vistoria");
                 Console.WriteLine("2. Listar vistorias");
-                Console.WriteLine("3. Voltar\n");
+                Console.WriteLine("3. Editar vistoria");
+                Console.WriteLine("4. Remover vistoria");
+                Console.WriteLine("5. Voltar\n");
 
                 int escolha = int.Parse(Console.ReadLine());
 
@@ -35,6 +37,11 @@ namespace Admin_Jardim
                         ListarVistorias();
                         break;
                     case 3:
+                        EditarVistoria();
+                        break;
+                    case 4:
+                        throw new Exception("Not implemented!");
+                    case 5:
                         return true;
                 }
 
@@ -43,52 +50,87 @@ namespace Admin_Jardim
                 Console.Clear();
             }
         }
-
         private void RealizarVistoria()
         {
             try
             {
-                int escolha = new MenuSelecionar<Arvore>(context.arvores, a => a.Nome, "Árvore", "uma").Main(loop: true);
+                context.vistorias.Add(LerVistoria());
+                Console.WriteLine("Vistoria adicionada com sucesso!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
 
-                Console.Write("Data da vistoria (DD/MM/YYYY): ");
-                DateTime dataVistoria = Convert.ToDateTime(Console.ReadLine());
+        private void EditarVistoria()
+        {
+            int escolha = -1;
 
-                Console.Write("Altura estimada: ");
-                double alturaEstimada = double.Parse(Console.ReadLine());
-
-                Console.Write("Diâmetro do tronco: ");
-                double diametroTronco = double.Parse(Console.ReadLine());
-
-                Console.Write("Diâmetro da copa: ");
-                double diametroCopa = double.Parse(Console.ReadLine());
-
-                Console.Write("Deseja adicionar sintomas? (s/n) ");
-                string resposta = Console.ReadLine();
-
-                MenuSintomas menuSintomas = new MenuSintomas();
-
-                if (resposta == "s")
+            try
+            {
+                while (escolha == -1)
                 {
-                    menuSintomas.Main();
+                    int selecionado = new MenuSelecionar<Vistoria>(context.vistorias, v => v.Nome, "Vistoria").Main();
+
+                    if (selecionado < context.vistorias.Count)
+                    {
+                        escolha = selecionado;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                    }
                 }
 
-                Vistoria vistoria = new Vistoria {
-                    DataVistoria = dataVistoria,
-                    AlturaEstimada = alturaEstimada,
-                    DiametroTronco = diametroTronco,
-                    DiametroCopa = diametroCopa,
-                    Sintomas = menuSintomas.Sintomas,
-                    Arvore = context.arvores[escolha],
-                };
-
-                context.AdicionarVistoria(vistoria);
-
-                Console.WriteLine("Vistoria realizada com sucesso!");
+                context.vistorias[escolha] = LerVistoria(context.vistorias[escolha]);
+                Console.WriteLine("Vistoria editada com sucesso!");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("Erro ao realizar vistoria: " + ex.Message);
+                Console.WriteLine(e.Message);
             }
+        }
+
+        private Vistoria LerVistoria(Vistoria vistoriaInicial = null)
+        {
+            int escolha = -1;
+
+            if (vistoriaInicial == null)
+            {
+                escolha = new MenuSelecionar<Arvore>(context.arvores, a => a.Nome, "Árvore", "uma").Main(loop: true);
+            }
+
+            DateTime dataVistoria = Convert.ToDateTime(new MenuCampo<Vistoria>("Data", v => $"{v.DataVistoria:dd/MM/yyyy}", vistoriaInicial).Main());
+            
+            double alturaEstimada = double.Parse(new MenuCampo<Vistoria>("Altura estimada", v => $"{v.AlturaEstimada:F2}", vistoriaInicial).Main());
+            double diametroTronco = double.Parse(new MenuCampo<Vistoria>("Diâmetro do tronco", v => $"{v.DiametroTronco:F2}", vistoriaInicial).Main());
+            double diametroCopa = double.Parse(new MenuCampo<Vistoria>("Diâmetro da copa", v => $"{v.DiametroCopa:F2}", vistoriaInicial).Main());
+
+            string operacao = vistoriaInicial == null ? "adicionar" : "editar";
+            Console.Write($"Deseja {operacao} sintomas? (s/n) ");
+            string resposta = Console.ReadLine();
+
+            MenuSintomas menuSintomas = new MenuSintomas(vistoriaInicial?.Sintomas);
+
+            if (resposta == "s")
+            {
+                menuSintomas.Main();
+            }
+
+            Vistoria vistoria = new Vistoria
+            {
+                Id = vistoriaInicial != null ? vistoriaInicial.Id : Guid.NewGuid().ToString(),
+                DataVistoria = dataVistoria,
+                AlturaEstimada = alturaEstimada,
+                DiametroTronco = diametroTronco,
+                DiametroCopa = diametroCopa,
+                Sintomas = menuSintomas.Sintomas,
+                Arvore = escolha >= 0 ? context.arvores[escolha] : vistoriaInicial.Arvore,
+
+            };
+
+            return vistoria;
         }
 
         private void ListarVistorias()

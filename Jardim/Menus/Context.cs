@@ -113,6 +113,7 @@ namespace Admin_Jardim
             vistorias = new List<Vistoria> { 
                 new Vistoria
                 {
+                    Id = Guid.NewGuid().ToString(),
                     DataVistoria = Convert.ToDateTime("12/05/2023"),
                     AlturaEstimada = 10,
                     DiametroCopa = 10,
@@ -126,6 +127,7 @@ namespace Admin_Jardim
 
                 new Vistoria
                 {
+                    Id = Guid.NewGuid().ToString(),
                     DataVistoria = Convert.ToDateTime("12/05/2025"),
                     AlturaEstimada = 11,
                     DiametroCopa = 12,
@@ -139,6 +141,7 @@ namespace Admin_Jardim
 
                 new Vistoria
                 {
+                    Id = Guid.NewGuid().ToString(),
                     DataVistoria = Convert.ToDateTime("12/05/2025"),
                     AlturaEstimada = 11,
                     DiametroCopa = 12,
