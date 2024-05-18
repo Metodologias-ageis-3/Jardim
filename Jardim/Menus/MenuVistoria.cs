@@ -40,7 +40,8 @@ namespace Admin_Jardim
                         EditarVistoria();
                         break;
                     case 4:
-                        throw new Exception("Not implemented!");
+                        DeletarVistoria();
+                        break;
                     case 5:
                         return true;
                 }
@@ -50,12 +51,36 @@ namespace Admin_Jardim
                 Console.Clear();
             }
         }
+        private void DeletarVistoria()
+        {
+            int escolha = -1;
+            while (escolha == -1)
+            {
+                int selecionado = new MenuSelecionar<Vistoria>(context.vistorias, v => v.Nome, "vistoria").Main();
+                if (selecionado < context.vistorias.Count)
+                {
+                    escolha = selecionado;
+                } 
+                else
+                {
+                    Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                }
+            }
+
+            context.vistorias.RemoveAt(escolha);
+            AtualizaDadosArvoreComBaseNaVistoriaMaisRecente();
+
+            Console.WriteLine("Vistoria removida com sucesso!"); 
+        }
+
         private void RealizarVistoria()
         {
             try
             {
                 context.vistorias.Add(LerVistoria());
-                Console.WriteLine("Vistoria adicionada com sucesso!");
+                AtualizaDadosArvoreComBaseNaVistoriaMaisRecente();
+
+                Console.WriteLine("Vistoria adicionada com sucesso!"); 
             }
             catch (Exception e)
             {
@@ -84,12 +109,24 @@ namespace Admin_Jardim
                 }
 
                 context.vistorias[escolha] = LerVistoria(context.vistorias[escolha]);
+                AtualizaDadosArvoreComBaseNaVistoriaMaisRecente();
                 Console.WriteLine("Vistoria editada com sucesso!");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        private void AtualizaDadosArvoreComBaseNaVistoriaMaisRecente()
+        {
+            DateTime dataMaisRecente = context.vistorias.Max(v => v.DataVistoria);
+            Vistoria vistoriaMaisRecente = context.vistorias.First(v => v.DataVistoria == dataMaisRecente);
+
+            if (vistoriaMaisRecente == null) return;
+
+            vistoriaMaisRecente.Arvore.DiametroTronco = vistoriaMaisRecente.DiametroTronco;
+            vistoriaMaisRecente.Arvore.Altura = vistoriaMaisRecente.AlturaEstimada;
         }
 
         private Vistoria LerVistoria(Vistoria vistoriaInicial = null)
@@ -127,7 +164,6 @@ namespace Admin_Jardim
                 DiametroCopa = diametroCopa,
                 Sintomas = menuSintomas.Sintomas,
                 Arvore = escolha >= 0 ? context.arvores[escolha] : vistoriaInicial.Arvore,
-
             };
 
             return vistoria;

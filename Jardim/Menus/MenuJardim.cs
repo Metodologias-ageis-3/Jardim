@@ -112,7 +112,10 @@ namespace Admin_Jardim
                 {
                     escolha = selecionado;
                 }
-                Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                else
+                {
+                    Console.WriteLine("Essa opcao nao existe, escolha novamente");
+                }
             }
 
             context.jardins.RemoveAt(escolha);

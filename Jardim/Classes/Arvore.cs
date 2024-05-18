@@ -262,6 +262,7 @@ namespace Admin_Jardim
                   $"---\n"
                 + $"Especie: {Especie}\n"
                 + $"Altura: {Altura}\n"
+                + $"Diâmetro do tronco: {DiametroTronco}\n"
                 + $"Idade: {Idade}\n"
                 + $"Localizacao: {Localizacao}\n";
         }
