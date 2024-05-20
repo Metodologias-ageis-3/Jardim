@@ -8,12 +8,11 @@ namespace Admin_Jardim
 {
     internal class MenuSintomas
     {
-        private Context context;
+    
         private Dictionary<string, int> sintomas;
 
-        public MenuSintomas(Dictionary<string, int> sintomas = null , Context context = null)
+        public MenuSintomas(Dictionary<string, int> sintomas = null)
         {
-            this.context = context;
             this.sintomas = sintomas == null ? new Dictionary<string, int>() : sintomas;
         }
 

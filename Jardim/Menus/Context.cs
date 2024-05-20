@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Admin_Jardim
 {
-    internal class Context
+    public class Context
     {
         public List<Jardim> jardins;
         public List<Canteiro> canteiros;
@@ -157,6 +157,9 @@ namespace Admin_Jardim
             jardins[0].AdicionarCanteiro(canteiros[0]);
             jardins[1].AdicionarCanteiro(canteiros[1]);
             jardins[2].AdicionarCanteiro(canteiros[2]);
+            arvores[0].AdicionarVistoria(vistorias[0]);
+            arvores[0].AdicionarVistoria(vistorias[1]);
+            arvores[1].AdicionarVistoria(vistorias[2]);
         }
 
         public void AdicionarArvoreCanteiro(Arvore arvore)
@@ -179,6 +182,8 @@ namespace Admin_Jardim
         public void AdicionarVistoria(Vistoria vistoria)
         {
             vistorias.Add(vistoria);
+            vistoria.Arvore.AdicionarVistoria(vistoria);
+            AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(vistoria.Arvore);
         }
 
         public void EditarArvore(Arvore arvore, Arvore arvoreNova) { 
@@ -196,6 +201,28 @@ namespace Admin_Jardim
             }
             arvores.Remove(arvore);
             arvores.Add(arvoreNova);
+        }
+
+        public void AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(Arvore arvore)
+        {
+            Vistoria vistoriaRecente = arvore.Vistorias.OrderBy(x => x.DataVistoria).FirstOrDefault();
+            vistoriaRecente.Arvore.Altura= vistoriaRecente.AlturaEstimada;
+            vistoriaRecente.Arvore.DiametroTronco = vistoriaRecente.DiametroTronco;
+        }
+
+        public void EditarVistoria(Vistoria vistoriaNova)
+        {
+            Vistoria vistoriaOriginal = vistorias.Where(t => t.Id == vistoriaNova.Id).First();
+            DeleteVistoria(vistoriaOriginal);
+            AdicionarVistoria(vistoriaNova);
+            AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(vistoriaNova.Arvore);
+        }
+
+        public void DeleteVistoria(Vistoria vistoria)
+        {
+            vistoria.Arvore.Vistorias.Remove(vistoria);
+            vistorias.Remove(vistoria);
+            AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(vistoria.Arvore);
         }
     }
 }
