@@ -7,7 +7,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Admin_Jardim
 {
-    internal class Vistoria
+    public class Vistoria
     {
         static public List<string> SINTOMAS = new List<string> {
             "Inclinação Tronco",

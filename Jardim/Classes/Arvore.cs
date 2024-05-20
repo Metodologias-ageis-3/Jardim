@@ -17,7 +17,7 @@ namespace Admin_Jardim
         private Jardim jardim;
         private List<string> historicoTratamentos;
         private string condicaoSaude;
-        private Canteiro? canteiro=null;
+        private Canteiro? canteiro = null;
         private string notasAdicionais;
         private double quantidadeAguaConsumida;
         private DateTime dataPlantio;
@@ -25,10 +25,12 @@ namespace Admin_Jardim
         private DateTime? dataRemocao;
         private string equipeRemocao;
         private string localizacao;
+        private List<Vistoria> vistorias;
 
         public Arvore()
         {
             historicoTratamentos = new List<string>();
+            vistorias = new List<Vistoria>();
         }
 
         public string Id
@@ -207,6 +209,12 @@ namespace Admin_Jardim
                 equipeRemocao = value; }
         }
 
+        public List<Vistoria> Vistorias{
+            get { return vistorias; }
+            private set { vistorias = value; }
+        }
+
+
         public void AdicionarTratamento(string pTratamento)
         {
             List<string> vTratamentos = new List<string>();
@@ -215,6 +223,11 @@ namespace Admin_Jardim
             vTratamentos.Add(pTratamento);
 
             historicoTratamentos = vTratamentos;
+        }
+
+        public void AdicionarVistoria(Vistoria vistoria)
+        {
+           this.Vistorias.Add(vistoria);
         }
 
 
@@ -228,27 +241,6 @@ namespace Admin_Jardim
 
                 localizacao = value;
             }
-        }
-
-
-        public void Apagar()
-        {
-            string id = "";
-            string especie = "";
-            double altura = new double();
-            double diametroTronco = new double();
-            int idade = new int();
-            Jardim jardim = null;
-            List<string> historicoTratamentos = new List<string>();
-            string condicaoSaude = "";
-            Canteiro canteiro = null;
-            string notasAdicionais = "";
-            double quantidadeAguaConsumida = new double();
-            DateTime dataPlantio = new DateTime(); 
-            string equipePlantio = "";
-            DateTime dataRemocao = new DateTime();
-            string equipeRemocao = "";
-            string localizacao = "";
         }
 
         public string Nome
