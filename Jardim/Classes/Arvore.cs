@@ -12,7 +12,9 @@ namespace Admin_Jardim
         private string id;
         private string especie;
         private double altura = 0;
+        private double alturaInicial = 0;
         private double diametroTronco = 0;
+        private double diametroTroncoInicial = 0;
         private int idade = 0;
         private Jardim jardim;
         private List<string> historicoTratamentos;
@@ -68,11 +70,24 @@ namespace Admin_Jardim
             get { return altura; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("A altura da árvore deve ser um número positivo.");
+                if (value <= 0 || value >= 130)
+                    throw new ArgumentException("A altura da árvore deve ser um número entre 0 e 130.");
 
                 altura = value;
             }
+        }
+
+        public double AlturaInicial
+        {
+            get { return alturaInicial; }
+            set
+            {
+                if (value <= 0 || value >= 130)
+                    throw new ArgumentException("A altura da árvore deve ser um número entre 0 e 130.");
+
+                alturaInicial = value;
+            }
+
         }
 
         public double DiametroTronco
@@ -80,8 +95,20 @@ namespace Admin_Jardim
             get { return diametroTronco; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número positivo.");
+                if (value <= 0 || value >= 60)
+                    throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número entre 0 e 60.");
+
+                diametroTronco = value;
+            }
+        }
+
+        public double DiametroTroncoInicial
+        {
+            get { return diametroTroncoInicial; }
+            set
+            {
+                if (value <= 0 || value >= 60)
+                    throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número entre 0 e 60.");
 
                 diametroTronco = value;
             }
@@ -92,8 +119,8 @@ namespace Admin_Jardim
             get { return idade; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("A idade da árvore deve ser um número positivo.");
+                if (value <= 0 || value > 4853)
+                    throw new ArgumentException("A idade da árvore deve ser um número entre 0 e 4853.");
 
                 idade = value;
             }
@@ -153,8 +180,8 @@ namespace Admin_Jardim
             get { return quantidadeAguaConsumida; }
             set
             {
-                if (value <= 0)
-                    throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número positivo.");
+                if (value <= 0 || value >= 200)
+                    throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número entre 0 e 200.");
 
                 quantidadeAguaConsumida = value;
             }
@@ -163,7 +190,11 @@ namespace Admin_Jardim
         public DateTime DataPlantio
         {
             get { return dataPlantio; }
-            set { dataPlantio = value; }
+            set { 
+                if (value > DataRemocao)
+                    throw new ArgumentException("A data da plantio não pode ser posterior a remoção.");
+        
+                dataPlantio = value; }
         }
 
         public string EquipePlantio
@@ -253,8 +284,10 @@ namespace Admin_Jardim
             return
                   $"---\n"
                 + $"Especie: {Especie}\n"
+                + $"Altura Inicial: {AlturaInicial}\n"
                 + $"Altura: {Altura}\n"
                 + $"Diâmetro do tronco: {DiametroTronco}\n"
+                + $"Diâmetro do tronco Inicial: {DiametroTroncoInicial}\n"
                 + $"Idade: {Idade}\n"
                 + $"Localizacao: {Localizacao}\n";
         }

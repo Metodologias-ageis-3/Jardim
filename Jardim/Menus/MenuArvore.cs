@@ -87,8 +87,12 @@ namespace Admin_Jardim
                 Console.Write("Altura: ");
                 arvore.Altura = float.Parse(Console.ReadLine());
 
+                arvore.AlturaInicial = arvore.Altura;
+
                 Console.Write("Diamentro do tronco: ");
                 arvore.DiametroTronco = float.Parse(Console.ReadLine());
+
+                arvore.DiametroTroncoInicial = arvore.DiametroTronco;
 
                 Console.Write("Idade: ");
                 arvore.Idade = int.Parse(Console.ReadLine());
@@ -175,8 +179,14 @@ namespace Admin_Jardim
                 Console.Write("Altura: ");
                 arvore.Altura = float.Parse(Console.ReadLine());
 
+                Console.Write("Altura Inicial: ");
+                arvore.AlturaInicial = float.Parse(Console.ReadLine());
+
                 Console.Write("Diamentro do tronco: ");
                 arvore.DiametroTronco = float.Parse(Console.ReadLine());
+
+                Console.Write("Diamentro do tronco inicial: ");
+                arvore.DiametroTroncoInicial = float.Parse(Console.ReadLine());
 
                 Console.Write("Idade: ");
                 arvore.Idade = int.Parse(Console.ReadLine());
