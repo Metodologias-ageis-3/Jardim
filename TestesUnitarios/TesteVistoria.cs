@@ -55,5 +55,23 @@ namespace TestesUnitarios
             Assert.AreEqual(vistoria.DiametroTronco, _context.vistorias.Where(t => t.Id == vistoria.Id).First().DiametroTronco);
         }
 
+        //7.5
+        [Test]
+        public void Editar_VistoriaCamposInvalidos_ExcecaoArgumentException()
+        {
+            Vistoria vistoria = _context.vistorias[1];
+            var excecao = Assert.Throws<ArgumentException>(() => vistoria.DiametroTronco = -19);
+            StringAssert.Contains("O diâmetro do tronco deve estar entre 0 e 30 metros.", excecao.Message);
+        }
+
+        //7.6
+        [Test]
+        public void Editar_VistoriaCamposAusente_ExcecaoArgumentException()
+        {
+            Vistoria vistoria = _context.vistorias[1];
+            var excecao = Assert.Throws<ArgumentException>(() => vistoria.Id = "");
+            StringAssert.Contains("O ID da árvore nao pode estar vazio.", excecao.Message);
+        }
+
     }
 }
