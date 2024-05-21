@@ -110,7 +110,7 @@ namespace Admin_Jardim
                 if (value <= 0 || value >= 60)
                     throw new ArgumentException("O diâmetro do tronco da árvore deve ser um número entre 0 e 60.");
 
-                diametroTronco = value;
+                diametroTroncoInicial = value;
             }
         }
 
@@ -284,10 +284,10 @@ namespace Admin_Jardim
             return
                   $"---\n"
                 + $"Especie: {Especie}\n"
-                + $"Altura Inicial: {AlturaInicial}\n"
-                + $"Altura: {Altura}\n"
-                + $"Diâmetro do tronco: {DiametroTronco}\n"
-                + $"Diâmetro do tronco Inicial: {DiametroTroncoInicial}\n"
+                + $"Altura Inicial: {AlturaInicial:F2}\n"
+                + $"Altura: {Altura:F2}\n"
+                + $"Diâmetro do tronco: {DiametroTronco:F2}\n"
+                + $"Diâmetro do tronco Inicial: {DiametroTroncoInicial:F2}\n"
                 + $"Idade: {Idade}\n"
                 + $"Localizacao: {Localizacao}\n";
         }
