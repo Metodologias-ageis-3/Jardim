@@ -138,6 +138,12 @@ namespace Admin_Jardim
 
             MenuSintomas menuSintomas = new MenuSintomas(vistoriaInicial?.Sintomas);
 
+            if (resposta.ToLower() != "s" || resposta.ToLower() != "n")
+            {
+                Console.WriteLine("Insira s ou n!");
+                return null;
+            }
+
             if (resposta == "s")
             {
                 menuSintomas.Main();

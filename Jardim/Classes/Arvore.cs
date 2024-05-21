@@ -9,7 +9,7 @@ namespace Admin_Jardim
 {
     public class Arvore
     {
-        private string id;
+        private string id = Guid.NewGuid().ToString();
         private string especie;
         private double altura = 0;
         private double alturaInicial = 0;
