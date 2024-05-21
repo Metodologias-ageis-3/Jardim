@@ -48,12 +48,16 @@
   <ItemGroup>
     <Compile Include="Classes\Arvore.cs" />
     <Compile Include="Classes\Canteiro.cs" />
+    <Compile Include="Classes\Equipa.cs" />
+    <Compile Include="Classes\Pessoa.cs" />
     <Compile Include="Classes\Vistoria.cs" />
     <Compile Include="Menus\Context.cs" />
     <Compile Include="Classes\Jardim.cs" />
     <Compile Include="Menus\MenuArvore.cs" />
     <Compile Include="Menus\MenuCampo.cs" />
     <Compile Include="Menus\MenuCanteiro.cs" />
+    <Compile Include="Menus\MenuEquipa.cs" />
+    <Compile Include="Menus\MenuFuncionario.cs" />
     <Compile Include="Menus\MenuJardim.cs" />
     <Compile Include="Menus\MenuSelecionar.cs" />
     <Compile Include="Menus\MenuSintomas.cs" />

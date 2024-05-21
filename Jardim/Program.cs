@@ -20,6 +20,8 @@ namespace Admin_Jardim
                 Console.WriteLine("2. Administrar canteiros");
                 Console.WriteLine("3. Administrar árvores");
                 Console.WriteLine("4. Administrar vistorias");
+                //Console.WriteLine("5. Administrar Funcionários");
+                //Console.WriteLine("6. Administrar Equipas");
                 Console.WriteLine("5. Sair");
 
                 string entrada = Console.ReadLine();
