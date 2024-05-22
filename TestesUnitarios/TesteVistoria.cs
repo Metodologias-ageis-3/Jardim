@@ -73,5 +73,23 @@ namespace TestesUnitarios
             StringAssert.Contains("O ID da árvore nao pode estar vazio.", excecao.Message);
         }
 
+
+        //7.7
+        [Test]
+        public void Excluir_VistoriaExistente_RemoverVistoria()
+        {
+            Vistoria vistoria = _context.vistorias[1];
+            _context.DeleteVistoria(vistoria);
+            Assert.IsFalse(_context.vistorias.Contains(vistoria));
+        }
+
+        //7.8
+        [Test]
+        public void Excluir_VistoriaInexistente_ExcecaoArgumentException()
+        {
+            Vistoria vistoria = new Vistoria() { Id="5"};
+            var excecao = Assert.Throws<ArgumentException>(() => _context.DeleteVistoria(vistoria));
+            StringAssert.Contains("Essa opcao nao existe, escolha novamente.", excecao.Message);
+        }
     }
 }
