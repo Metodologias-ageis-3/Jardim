@@ -49,7 +49,6 @@
     <Compile Include="Classes\Arvore.cs" />
     <Compile Include="Classes\Canteiro.cs" />
     <Compile Include="Classes\Equipa.cs" />
-    <Compile Include="Classes\Funcionario.cs" />
     <Compile Include="Classes\Vistoria.cs" />
     <Compile Include="Menus\Context.cs" />
     <Compile Include="Classes\Jardim.cs" />

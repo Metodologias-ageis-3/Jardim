@@ -1,5 +1,4 @@
-﻿using Admin_Jardim.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -77,9 +76,10 @@ namespace Admin_Jardim
                 string nome = Console.ReadLine();
 
                 Console.WriteLine("Funcionários disponíveis:");
-                for (int i = 0; i < context.funcionarios.Count; i++)
+
+                for (int i = 0; i < Equipa.PessoasPredefinidas.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {context.funcionarios[i].Nome}");
+                    Console.WriteLine($"{i + 1}. {Equipa.PessoasPredefinidas[i].Nome}");
                 }
 
                 Console.WriteLine("Selecione os números dos funcionários que deseja adicionar (separados por vírgula):");
@@ -91,13 +91,14 @@ namespace Admin_Jardim
                     throw new ArgumentException("A equipe só pode ter no máximo 3 integrantes.");
                 }
 
-                List<Funcionario> funcionariosSelecionados = new List<Funcionario>();
+                List<(string, string)> funcionariosSelecionados = new List<(string, string)>();
 
                 foreach (var index in indices)
                 {
-                    if (int.TryParse(index.Trim(), out int idx) && idx >= 1 && idx <= context.funcionarios.Count)
+                    int idx;
+                    if (int.TryParse(index.Trim(), out idx) && idx >= 1 && idx <= Equipa.PessoasPredefinidas.Count)
                     {
-                        funcionariosSelecionados.Add(context.funcionarios[idx - 1]);
+                        funcionariosSelecionados.Add(Equipa.PessoasPredefinidas[idx - 1]);
                     }
                     else
                     {
@@ -116,6 +117,7 @@ namespace Admin_Jardim
             }
         }
 
+
         public void Deletar()
         {
             try
@@ -123,16 +125,11 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha a equipe para deletar:");
                 for (int i = 0; i < context.equipas.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {context.equipas[i].NomeEquipa}");
+                    Console.WriteLine($"{i}. {context.equipas[i]}");
                 }
 
                 int escolha = int.Parse(Console.ReadLine());
-                if (escolha < 1 || escolha > context.equipas.Count)
-                {
-                    throw new ArgumentException("Escolha inválida.");
-                }
-
-                context.equipas.RemoveAt(escolha - 1);
+                context.equipas.RemoveAt(escolha);
 
                 Console.WriteLine("Equipe removida com sucesso!");
             }
@@ -165,7 +162,7 @@ namespace Admin_Jardim
                 Console.WriteLine("Integrantes atuais:");
                 foreach (var integrante in equipe.Integrantes)
                 {
-                    Console.WriteLine($"- {integrante.Id}: {integrante.Nome}");
+                    Console.WriteLine($"- {integrante.Key}: {integrante.Value}");
                 }
 
                 Console.WriteLine($"Número atual de integrantes: {equipe.Integrantes.Count}");
@@ -192,9 +189,9 @@ namespace Admin_Jardim
                         }
 
                         Console.WriteLine("Funcionários disponíveis:");
-                        for (int i = 0; i < context.funcionarios.Count; i++)
+                        for (int i = 0; i < Equipa.PessoasPredefinidas.Count; i++)
                         {
-                            Console.WriteLine($"{i + 1}. {context.funcionarios[i].Nome}");
+                            Console.WriteLine($"{i + 1}. {Equipa.PessoasPredefinidas[i].Nome}");
                         }
 
                         Console.WriteLine("Selecione os números dos funcionários que deseja adicionar (separados por vírgula):");
@@ -203,12 +200,13 @@ namespace Admin_Jardim
 
                         foreach (var index in indicesAdicionar)
                         {
-                            if (int.TryParse(index.Trim(), out int idx) && idx >= 1 && idx <= context.funcionarios.Count)
+                            int idx;
+                            if (int.TryParse(index.Trim(), out idx) && idx >= 1 && idx <= Equipa.PessoasPredefinidas.Count)
                             {
-                                var pessoaSelecionada = context.funcionarios[idx - 1];
-                                if (!equipe.Integrantes.Any(f => f.Id == pessoaSelecionada.Id))
+                                var pessoaSelecionada = Equipa.PessoasPredefinidas[idx - 1];
+                                if (!equipe.Integrantes.ContainsKey(pessoaSelecionada.Id))
                                 {
-                                    equipe.AdicionarIntegrante(pessoaSelecionada);
+                                    equipe.Integrantes.Add(pessoaSelecionada.Id, pessoaSelecionada.Nome);
                                 }
                                 else
                                 {
@@ -241,10 +239,11 @@ namespace Admin_Jardim
 
                         foreach (var index in indicesRemover)
                         {
-                            if (int.TryParse(index.Trim(), out int idx) && idx >= 1 && idx <= equipe.Integrantes.Count)
+                            int idx;
+                            if (int.TryParse(index.Trim(), out idx) && idx >= 1 && idx <= equipe.Integrantes.Count)
                             {
-                                var integranteRemover = equipe.Integrantes[idx - 1];
-                                equipe.RemoverIntegrante(integranteRemover.Id);
+                                var integranteRemover = equipe.Integrantes.ElementAt(idx - 1);
+                                equipe.Integrantes.Remove(integranteRemover.Key);
                             }
                             else
                             {
@@ -265,5 +264,7 @@ namespace Admin_Jardim
                 Console.WriteLine(ex.Message);
             }
         }
+
+
     }
 }

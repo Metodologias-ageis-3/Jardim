@@ -1,5 +1,4 @@
-﻿using Admin_Jardim.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
@@ -15,8 +14,7 @@ namespace Admin_Jardim
         public List<Canteiro> canteiros;
         public List<Arvore> arvores;
         public List<Vistoria> vistorias;
-        public List<Equipa> equipas= new List<Equipa>();
-        public List<Funcionario> funcionarios = new List<Funcionario>();
+        public List<Equipa> equipas;
 
         public Context(bool populate = false)
         {
@@ -35,39 +33,10 @@ namespace Admin_Jardim
 
         private void Populate()
         {
-            var pessoasPredefinidas = new List<(string, string)>
-            {
-                ("1", "João Silva"),
-                ("2", "Maria Souza"),
-                ("3", "Pedro Santos"),
-                ("4", "Ana Oliveira"),
-                ("5", "José Pereira"),
-                ("6", "Carla Almeida"),
-                ("7", "Antônio Lima"),
-                ("8", "Mariana Ferreira"),
-                ("9", "Carlos Rocha")
-            };
-            List<Funcionario> Funcionarios1 = new List<Funcionario>
-            {
-                new Funcionario("1", "João Silva"),
-                new Funcionario("2", "Maria Souza"),
-                new Funcionario("3", "Pedro Santos"),
-                new Funcionario("4", "Ana Oliveira"),
-                new Funcionario("5", "José Pereira")
-            };
-
-            List<Funcionario> Funcionarios2 = new List<Funcionario>
-            {
-                new Funcionario("6", "Carla Almeida"),
-                new Funcionario("7", "Antônio Lima"),
-                new Funcionario("8", "Mariana Ferreira"),
-                new Funcionario("9", "Carlos Rocha"),
-                new Funcionario("10", "Sandra Gomes")
-            };
             equipas = new List<Equipa>
             {
-                new Equipa("Equipa 1",Funcionarios1),
-                new Equipa("Equipa 2", Funcionarios2)
+                new Equipa("Equipa 1", Equipa.PessoasPredefinidas.Take(3).ToList()),
+                new Equipa("Equipa 2", Equipa.PessoasPredefinidas.Skip(3).Take(3).ToList())
             };
 
             jardins = new List<Jardim>
