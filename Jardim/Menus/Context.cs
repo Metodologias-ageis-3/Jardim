@@ -186,6 +186,10 @@ namespace Admin_Jardim
             AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(vistoria.Arvore);
         }
 
+        public List<Vistoria> ListaVistoria(){
+            return new List<Vistoria>(vistorias);
+        }
+
         public void EditarArvore(Arvore arvore, Arvore arvoreNova) { 
             if(arvore.Canteiro != null)
             {
