@@ -39,7 +39,5 @@ namespace TestesUnitarios
             var excecao = Assert.Throws<ArgumentException>(() => new Equipa("1", new List<(string, string)> { ("1", "João Silva") }));
             StringAssert.Contains("O nome da equipe não pode ser um número inteiro.", excecao.Message);
         }
-
-        
     }
 }
