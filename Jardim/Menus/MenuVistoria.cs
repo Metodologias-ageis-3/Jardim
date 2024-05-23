@@ -126,6 +126,7 @@ namespace Admin_Jardim
             if (vistoriaInicial == null)
             {
                 escolha = new MenuSelecionar<Arvore>(context.arvores, a => a.Nome, "Árvore", "uma").Main(loop: true);
+                escolha = new MenuSelecionar<Equipa>(context.equipas, a => a.NomeEquipa, "Equipa", "uma").Main(loop: true);
             }
 
             DateTime dataVistoria = Convert.ToDateTime(new MenuCampo<Vistoria>("Data", v => $"{v.DataVistoria:dd/MM/yyyy}", vistoriaInicial).Main());

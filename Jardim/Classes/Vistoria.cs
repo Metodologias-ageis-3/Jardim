@@ -42,13 +42,14 @@ namespace Admin_Jardim
             "Pragas Ramos"
         };
 
-        private string id;
+        private string id = Guid.NewGuid().ToString();
         private DateTime dataVistoria;
         private double alturaEstimada;
         private double diametroTronco;
         private double diametroCopa;
         private Dictionary<string, int> sintomas = new Dictionary<string, int>();
         private Arvore arvore;
+        private Equipa equipeVistoria;
 
         public string Id
         {
@@ -116,6 +117,12 @@ namespace Admin_Jardim
             set { arvore = value; }
         }
 
+        public Equipa EquipeVistoria
+        {
+            get { return equipeVistoria; }
+            set { equipeVistoria = value; }
+        }
+
         public void AdicionarSintoma(string sintoma, int classificacao)
         {
             
@@ -171,12 +178,15 @@ namespace Admin_Jardim
 
         public override string ToString()
         {
+            string equipeInfo = EquipeVistoria != null ? EquipeVistoria.NomeEquipa : "N/A";
+
             return
                   "---\n"
                 + $"Data: {DataVistoria:dd/MM/yyyy}\n"
                 + $"Altura Estimada: {AlturaEstimada:F2}\n"
                 + $"Diâmetro do tronco: {DiametroTronco:F2}\n"
-                + $"Diâmetro da copa: {DiametroCopa:F2}\n";
+                + $"Diâmetro da copa: {DiametroCopa:F2}\n"
+                + $"Equipa de Vistoria: {equipeInfo}\n";
         }
     }
 }

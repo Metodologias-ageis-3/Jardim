@@ -79,12 +79,17 @@ namespace Admin_Jardim
 
                 for (int i = 0; i < Equipa.PessoasPredefinidas.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {Equipa.PessoasPredefinidas[i].Item2}");
+                    Console.WriteLine($"{i + 1}. {Equipa.PessoasPredefinidas[i].Nome}");
                 }
 
                 Console.WriteLine("Selecione os números dos funcionários que deseja adicionar (separados por vírgula):");
                 string input = Console.ReadLine();
                 string[] indices = input.Split(',');
+
+                if (indices.Length > 3)
+                {
+                    throw new ArgumentException("A equipe só pode ter no máximo 3 integrantes.");
+                }
 
                 List<(string, string)> funcionariosSelecionados = new List<(string, string)>();
 
@@ -141,14 +146,105 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha a equipe para editar:");
                 for (int i = 0; i < context.equipas.Count; i++)
                 {
-                    Console.WriteLine($"{i}. {context.equipas[i]}");
+                    Console.WriteLine($"{i}. {context.equipas[i].NomeEquipa}");
                 }
 
                 int escolha = int.Parse(Console.ReadLine());
                 Equipa equipe = context.equipas[escolha];
 
-                Console.Write("Novo Nome: ");
-                equipe.NomeEquipa = Console.ReadLine();
+                Console.WriteLine($"Equipe selecionada: {equipe.NomeEquipa}");
+
+                Console.WriteLine("Integrantes atuais:");
+                foreach (var integrante in equipe.Integrantes)
+                {
+                    Console.WriteLine($"- {integrante.Key}: {integrante.Value}");
+                }
+
+                Console.WriteLine($"Número atual de integrantes: {equipe.Integrantes.Count}");
+
+                Console.WriteLine("Deseja alterar o nome da equipe? (s/n)");
+                string alterarNome = Console.ReadLine().Trim().ToLower();
+
+                if (alterarNome == "s")
+                {
+                    Console.Write("Novo Nome: ");
+                    equipe.NomeEquipa = Console.ReadLine();
+                }
+
+                Console.WriteLine("Deseja adicionar ou remover integrantes? (a - Adicionar, r - Remover, Enter - Sair)");
+                string opcao = Console.ReadLine().Trim().ToLower();
+
+                switch (opcao)
+                {
+                    case "a":
+                        if (equipe.Integrantes.Count >= 3)
+                        {
+                            Console.WriteLine("A equipe já tem o máximo de integrantes permitidos (3).");
+                            break;
+                        }
+
+                        Console.WriteLine("Funcionários disponíveis:");
+                        for (int i = 0; i < Equipa.PessoasPredefinidas.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {Equipa.PessoasPredefinidas[i].Nome}");
+                        }
+
+                        Console.WriteLine("Selecione os números dos funcionários que deseja adicionar (separados por vírgula):");
+                        string inputAdicionar = Console.ReadLine();
+                        string[] indicesAdicionar = inputAdicionar.Split(',');
+
+                        foreach (var index in indicesAdicionar)
+                        {
+                            int idx;
+                            if (int.TryParse(index.Trim(), out idx) && idx >= 1 && idx <= Equipa.PessoasPredefinidas.Count)
+                            {
+                                var pessoaSelecionada = Equipa.PessoasPredefinidas[idx - 1];
+                                if (!equipe.Integrantes.ContainsKey(pessoaSelecionada.Id))
+                                {
+                                    equipe.Integrantes.Add(pessoaSelecionada.Id, pessoaSelecionada.Nome);
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"O integrante {pessoaSelecionada.Nome} já faz parte da equipe.");
+                                }
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Número de funcionário inválido.");
+                            }
+                        }
+                        break;
+
+                    case "r":
+                        if (equipe.Integrantes.Count == 0)
+                        {
+                            Console.WriteLine("A equipe já está vazia.");
+                            break;
+                        }
+
+                        Console.WriteLine("Selecione o número do integrante que deseja remover (separados por vírgula):");
+                        string inputRemover = Console.ReadLine();
+                        string[] indicesRemover = inputRemover.Split(',');
+
+                        foreach (var index in indicesRemover)
+                        {
+                            int idx;
+                            if (int.TryParse(index.Trim(), out idx) && idx >= 1 && idx <= equipe.Integrantes.Count)
+                            {
+                                var integranteRemover = equipe.Integrantes.ElementAt(idx - 1);
+                                equipe.Integrantes.Remove(integranteRemover.Key);
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Número de integrante inválido.");
+                            }
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine("Operação cancelada.");
+                        break;
+                }
 
                 Console.WriteLine("Equipe editada com sucesso!");
             }
@@ -157,5 +253,6 @@ namespace Admin_Jardim
                 Console.WriteLine(ex.Message);
             }
         }
+
     }
 }
