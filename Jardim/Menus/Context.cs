@@ -118,7 +118,7 @@ namespace Admin_Jardim
                     Localizacao = "111"
                 }
             };
-            vistorias = new List<Vistoria> { 
+            vistorias = new List<Vistoria> {
                 new Vistoria
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -126,11 +126,12 @@ namespace Admin_Jardim
                     AlturaEstimada = 10,
                     DiametroCopa = 10,
                     DiametroTronco = 10,
-                    Sintomas = new Dictionary<string, int> { 
+                    Sintomas = new Dictionary<string, int> {
                         { Vistoria.SINTOMAS[0], 2 },
                         { Vistoria.SINTOMAS[1], 3 },
                     },
-                    Arvore = arvores[0]
+                    Arvore = arvores[0],
+                    Equipa = equipas[1]
                 },
 
                 new Vistoria
@@ -144,7 +145,8 @@ namespace Admin_Jardim
                         { Vistoria.SINTOMAS[0], 3 },
                         { Vistoria.SINTOMAS[1], 1 },
                     },
-                    Arvore = arvores[0]
+                    Arvore = arvores[0],
+                    Equipa = equipas[0]
                 },
 
                 new Vistoria
@@ -157,7 +159,8 @@ namespace Admin_Jardim
                     Sintomas = new Dictionary<string, int> {
                         { Vistoria.SINTOMAS[0], 3 },
                     },
-                    Arvore = arvores[1]
+                    Arvore = arvores[1],
+                    Equipa = equipas[1]
                 }
             };
 

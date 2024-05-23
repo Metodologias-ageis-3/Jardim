@@ -49,7 +49,7 @@ namespace Admin_Jardim
         private double diametroCopa;
         private Dictionary<string, int> sintomas = new Dictionary<string, int>();
         private Arvore arvore;
-        private Equipa equipeVistoria;
+        private Equipa equipa;
 
         public string Id
         {
@@ -117,10 +117,10 @@ namespace Admin_Jardim
             set { arvore = value; }
         }
 
-        public Equipa EquipeVistoria
+        public Equipa Equipa
         {
-            get { return equipeVistoria; }
-            set { equipeVistoria = value; }
+            get { return equipa; }
+            set { equipa = value; }
         }
 
         public void AdicionarSintoma(string sintoma, int classificacao)
@@ -167,6 +167,11 @@ namespace Admin_Jardim
             {
                 throw new InvalidOperationException("Já existe uma vistoria na mesma data para esta árvore.");
             }
+        }
+
+        public void AdicionarEquipa(Equipa equipa)
+        {
+            this.Equipa= equipa;
         }
 
 

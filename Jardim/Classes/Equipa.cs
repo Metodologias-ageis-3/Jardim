@@ -25,7 +25,7 @@ namespace Admin_Jardim
             ("9", "Carlos Rocha")
         };
 
-        public Equipa(string nomeEquipa, List<(string, string)> integrantesSelecionados = null)
+        public Equipa(string nomeEquipa, List<(string, string)> integrantesSelecionados)
         {
             NomeEquipa = nomeEquipa;
             Integrantes = new Dictionary<string, string>();
