@@ -14,6 +14,7 @@ namespace Admin_Jardim
         public List<Canteiro> canteiros;
         public List<Arvore> arvores;
         public List<Vistoria> vistorias;
+        public List<Equipa> equipas;
 
         public Context(bool populate = false)
         {
@@ -27,10 +28,17 @@ namespace Admin_Jardim
             canteiros = new List<Canteiro>();
             arvores = new List<Arvore>();
             vistorias = new List<Vistoria>();
+            equipas = new List<Equipa>();
         }
 
         private void Populate()
         {
+            equipas = new List<Equipa>
+            {
+                new Equipa("Equipa 1", Equipa.PessoasPredefinidas.Take(3).ToList()),
+                new Equipa("Equipa 2", Equipa.PessoasPredefinidas.Skip(3).Take(3).ToList())
+            };
+
             jardins = new List<Jardim>
             {
                 new Jardim {

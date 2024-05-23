@@ -20,9 +20,8 @@ namespace Admin_Jardim
                 Console.WriteLine("2. Administrar canteiros");
                 Console.WriteLine("3. Administrar árvores");
                 Console.WriteLine("4. Administrar vistorias");
-                //Console.WriteLine("5. Administrar Funcionários");
-                //Console.WriteLine("6. Administrar Equipas");
-                Console.WriteLine("5. Sair");
+                Console.WriteLine("5. Administrar Equipas");
+                Console.WriteLine("6. Sair");
 
                 string entrada = Console.ReadLine();
 
@@ -41,6 +40,9 @@ namespace Admin_Jardim
                         new MenuVistoria(context).Main();
                         break;
                     case "5":
+                        new MenuEquipa(context).Main();
+                        break;
+                    case "6":
                         Environment.Exit(0);
                         break;
                     default:

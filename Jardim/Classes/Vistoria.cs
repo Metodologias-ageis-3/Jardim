@@ -118,8 +118,16 @@ namespace Admin_Jardim
 
         public void AdicionarSintoma(string sintoma, int classificacao)
         {
+            
             if (classificacao < 0 || classificacao > 3)
+            {
                 throw new ArgumentException("A classificação do sintoma deve estar entre 0 e 3.");
+            }
+
+            if (!Vistoria.SINTOMAS.Contains(sintoma))
+            {
+                throw new ArgumentException("Sintoma inválido. O sintoma não está na lista de sintomas permitidos.");
+            }
 
             sintomas[sintoma] = classificacao;
         }
@@ -131,6 +139,30 @@ namespace Admin_Jardim
                 DataVistoria = DateTime.Now;
             }
         }
+
+       
+
+        public void ValidarVistoria()
+        {
+            Console.WriteLine("Ola");
+            if (this.Arvore == null)
+            {
+                throw new InvalidOperationException("A árvore da vistoria não pode ser nula.");
+            }
+
+            // Validação de data da vistoria dentro do intervalo permitido
+            if (this.DataVistoria < this.Arvore.DataPlantio || this.DataVistoria > this.Arvore.DataRemocao)
+            {
+                throw new InvalidOperationException("A data da vistoria está fora do intervalo permitido para esta árvore.");
+            }
+
+            // Validação de vistorias na mesma data
+            if (this.Arvore.Vistorias.Any(v => v.DataVistoria == this.DataVistoria && v.Id != this.Id))
+            {
+                throw new InvalidOperationException("Já existe uma vistoria na mesma data para esta árvore.");
+            }
+        }
+
 
         public string Nome
         {

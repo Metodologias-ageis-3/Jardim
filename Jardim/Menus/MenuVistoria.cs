@@ -86,6 +86,7 @@ namespace Admin_Jardim
             }
         }
 
+
         private void EditarVistoria()
         {
             int escolha = -1;
@@ -115,6 +116,7 @@ namespace Admin_Jardim
             }
         }
 
+
         
 
         private Vistoria LerVistoria(Vistoria vistoriaInicial = null)
@@ -138,7 +140,7 @@ namespace Admin_Jardim
 
             MenuSintomas menuSintomas = new MenuSintomas(vistoriaInicial?.Sintomas);
 
-            if (resposta.ToLower() != "s" || resposta.ToLower() != "n")
+            if (resposta.ToLower() != "s" && resposta.ToLower() != "n")
             {
                 Console.WriteLine("Insira s ou n!");
                 return null;
@@ -158,7 +160,9 @@ namespace Admin_Jardim
                 DiametroCopa = diametroCopa,
                 Sintomas = menuSintomas.Sintomas,
                 Arvore = escolha >= 0 ? context.arvores[escolha] : vistoriaInicial.Arvore,
+                
             };
+            vistoria.ValidarVistoria();
 
             return vistoria;
         }
@@ -183,7 +187,18 @@ namespace Admin_Jardim
                 {
                     string v = string.Join("\n", vistoria.ToString().Split('\n').Select(s => $"  {s}"));
                     Console.WriteLine(v);
+
+                    if (vistoria.Sintomas != null && vistoria.Sintomas.Any())
+                    {
+                        Console.WriteLine("    Sintomas:");
+                        foreach (var sintoma in vistoria.Sintomas)
+                        {
+                            Console.WriteLine($"      - {sintoma.Key}: {sintoma.Value}");
+                        }
+                    }
                 }
+
+
             }
         }
     }

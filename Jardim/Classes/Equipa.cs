@@ -4,28 +4,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Admin_Jardim.Classes
+namespace Admin_Jardim
 {
-    internal class Equipa
+    public class Equipa
     {
         private string id = Guid.NewGuid().ToString();
-        private string nome;
-        private List<Pessoa> integrantes;
+        private string nomeEquipa;
+        private Dictionary<string, string> integrantes;
 
-        public Equipa(string nome)
+        public static List<(string Id, string Nome)> PessoasPredefinidas = new List<(string, string)>
         {
-            Nome = nome;
-            Integrantes = new List<Pessoa>();
+            ("1", "João Silva"),
+            ("2", "Maria Souza"),
+            ("3", "Pedro Santos"),
+            ("4", "Ana Oliveira"),
+            ("5", "José Pereira"),
+            ("6", "Carla Almeida"),
+            ("7", "Antônio Lima"),
+            ("8", "Mariana Ferreira"),
+            ("9", "Carlos Rocha")
+        };
+
+        public Equipa(string nomeEquipa, List<(string, string)> integrantesSelecionados = null)
+        {
+            NomeEquipa = nomeEquipa;
+            Integrantes = new Dictionary<string, string>();
+
+            if (integrantesSelecionados != null)
+            {
+                foreach (var (id, nome) in integrantesSelecionados)
+                {
+                    AdicionarIntegrante(id, nome);
+                }
+            }
+
+            if (Integrantes.Count == 0)
+            {
+                throw new ArgumentException("A equipe deve ter pelo menos um integrante.");
+            }
         }
 
         public string Id
         {
             get { return id; }
+            set
+            {
+                if (value == "")
+                    throw new ArgumentException("O ID da equipa nao pode estar vazio.");
+
+                id = value;
+            }
         }
 
-        public string Nome
+        public string NomeEquipa
         {
-            get { return nome; }
+            get { return nomeEquipa; }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -35,36 +68,44 @@ namespace Admin_Jardim.Classes
                 if (int.TryParse(value, out int n))
                     throw new ArgumentException("O nome da equipe não pode ser um número inteiro.");
 
-                nome = value;
+                nomeEquipa = value;
             }
         }
 
-        public List<Pessoa> Integrantes
+        public Dictionary<string, string> Integrantes
         {
             get { return integrantes; }
             private set { integrantes = value; }
         }
 
-        public void AdicionarIntegrante(Pessoa pessoa)
+        public void AdicionarIntegrante(string id, string nomeIntegrante)
         {
-            if (pessoa == null)
-                throw new ArgumentException("A pessoa não pode ser nula.");
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException("O ID da pessoa não pode estar vazio.");
+            if (string.IsNullOrEmpty(nomeIntegrante))
+                throw new ArgumentException("O nome da pessoa não pode estar vazio.");
 
-            integrantes.Add(pessoa);
+            if (integrantes.ContainsKey(id))
+                throw new ArgumentException("Já existe uma pessoa com esse ID na equipe.");
+
+            integrantes[id] = nomeIntegrante;
         }
 
-        public void RemoverIntegrante(Pessoa pessoa)
+        public void RemoverIntegrante(string id)
         {
-            if (pessoa == null)
-                throw new ArgumentException("A pessoa não pode ser nula.");
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException("O ID da pessoa não pode estar vazio.");
 
-            integrantes.Remove(pessoa);
+            if (!integrantes.ContainsKey(id))
+                throw new ArgumentException("Não existe uma pessoa com esse ID na equipe.");
+
+            integrantes.Remove(id);
         }
 
         public override string ToString()
         {
-            string integrantesInfo = string.Join(", ", Integrantes.ConvertAll(p => p.ToString()));
-            return $"Equipe: {Nome}\nIdentificador: {Id}\nIntegrantes: {integrantesInfo}";
+            string integrantesInfo = string.Join(", ", Integrantes.Select(i => $"ID: {i.Key}, Nome: {i.Value}"));
+            return $"Equipe: {NomeEquipa}\nIdentificador: {Id}\nIntegrantes: {integrantesInfo}";
         }
     }
 }

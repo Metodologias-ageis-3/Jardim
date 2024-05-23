@@ -68,8 +68,14 @@ namespace Admin_Jardim
             string sintoma = listaSintomas[escolha];
 
             Console.Write($"Classificação para o sintoma '{sintoma}' (número de 0 a 3): ");
-            int classificacao = int.Parse(Console.ReadLine());
-            sintomas[sintoma] = classificacao;
+            if (int.TryParse(Console.ReadLine(), out int classificacao) && classificacao >= 0 && classificacao <= 3)
+            {
+                sintomas[sintoma] = classificacao;
+            }
+            else
+            {
+                Console.WriteLine("Classificação inválida. Deve ser um número entre 0 e 3.");
+            }
         }
 
         private void ListarSintomasInformados()

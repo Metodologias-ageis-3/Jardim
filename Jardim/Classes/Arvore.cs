@@ -258,7 +258,24 @@ namespace Admin_Jardim
 
         public void AdicionarVistoria(Vistoria vistoria)
         {
-           this.Vistorias.Add(vistoria);
+            if (vistoria == null)
+            {
+                throw new ArgumentException("A vistoria não pode ser nula.");
+            }
+
+            // Validação de data da vistoria dentro do intervalo permitido
+            if (vistoria.DataVistoria < this.DataPlantio || vistoria.DataVistoria > this.DataRemocao)
+            {
+                throw new InvalidOperationException("A data da vistoria está fora do intervalo permitido para esta árvore.");
+            }
+
+            // Validação de vistorias na mesma data
+            if (this.Vistorias.Any(v => v.DataVistoria == vistoria.DataVistoria && v.Id != vistoria.Id))
+            {
+                throw new InvalidOperationException("Já existe uma vistoria na mesma data para esta árvore.");
+            }
+
+            this.Vistorias.Add(vistoria);
         }
 
 
@@ -283,13 +300,15 @@ namespace Admin_Jardim
         {
             return
                   $"---\n"
-                + $"Especie: {Especie}\n"
-                + $"Altura Inicial: {AlturaInicial:F2}\n"
-                + $"Altura: {Altura:F2}\n"
-                + $"Diâmetro do tronco: {DiametroTronco:F2}\n"
-                + $"Diâmetro do tronco Inicial: {DiametroTroncoInicial:F2}\n"
-                + $"Idade: {Idade}\n"
-                + $"Localizacao: {Localizacao}\n";
+                + $"- Especie: {Especie}\n"
+                + $"- Data de Plantio: {DataPlantio:F2}\n"
+                + $"- Data de Remoção: {DataRemocao:F2}\n"
+                + $"- Altura Inicial: {AlturaInicial:F2}\n"
+                + $"- Altura: {Altura:F2}\n"
+                + $"- Diâmetro do tronco: {DiametroTronco:F2}\n"
+                + $"- Diâmetro do tronco Inicial: {DiametroTroncoInicial:F2}\n"
+                + $"- Idade: {Idade}\n"
+                + $"- Localizacao: {Localizacao}\n";
         }
     }
 }
