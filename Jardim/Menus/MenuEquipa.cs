@@ -15,12 +15,6 @@ namespace Admin_Jardim
             this.context = context;
         }
 
-        private List<Equipa> equipas;
-        public MenuEquipa(List<Equipa> equipas)
-        {
-            this.equipas = equipas;
-        }
-
         public bool Main()
         {
             while (true)
@@ -68,7 +62,7 @@ namespace Admin_Jardim
 
         public void Listar()
         {
-            foreach (Equipa equipe in equipas)
+            foreach (Equipa equipe in context.equipas)
             {
                 Console.WriteLine(equipe);
             }
@@ -83,20 +77,17 @@ namespace Admin_Jardim
 
                 Console.WriteLine("Funcionários disponíveis:");
 
-                // Listar os funcionários disponíveis
                 for (int i = 0; i < Equipa.PessoasPredefinidas.Count; i++)
                 {
                     Console.WriteLine($"{i + 1}. {Equipa.PessoasPredefinidas[i].Item2}");
                 }
 
-                // Solicitar ao usuário que escolha os funcionários
                 Console.WriteLine("Selecione os números dos funcionários que deseja adicionar (separados por vírgula):");
                 string input = Console.ReadLine();
                 string[] indices = input.Split(',');
 
                 List<(string, string)> funcionariosSelecionados = new List<(string, string)>();
 
-                // Adicionar os funcionários selecionados à lista
                 foreach (var index in indices)
                 {
                     int idx;
@@ -111,7 +102,7 @@ namespace Admin_Jardim
                 }
 
                 Equipa novaEquipe = new Equipa(nome, funcionariosSelecionados);
-                equipas.Add(novaEquipe);
+                context.equipas.Add(novaEquipe);
 
                 Console.WriteLine("Equipe adicionada com sucesso!");
             }
@@ -127,13 +118,13 @@ namespace Admin_Jardim
             try
             {
                 Console.WriteLine("Escolha a equipe para deletar:");
-                for (int i = 0; i < equipas.Count; i++)
+                for (int i = 0; i < context.equipas.Count; i++)
                 {
-                    Console.WriteLine($"{i}. {equipas[i]}");
+                    Console.WriteLine($"{i}. {context.equipas[i]}");
                 }
 
                 int escolha = int.Parse(Console.ReadLine());
-                equipas.RemoveAt(escolha);
+                context.equipas.RemoveAt(escolha);
 
                 Console.WriteLine("Equipe removida com sucesso!");
             }
@@ -148,13 +139,13 @@ namespace Admin_Jardim
             try
             {
                 Console.WriteLine("Escolha a equipe para editar:");
-                for (int i = 0; i < equipas.Count; i++)
+                for (int i = 0; i < context.equipas.Count; i++)
                 {
-                    Console.WriteLine($"{i}. {equipas[i]}");
+                    Console.WriteLine($"{i}. {context.equipas[i]}");
                 }
 
                 int escolha = int.Parse(Console.ReadLine());
-                Equipa equipe = equipas[escolha];
+                Equipa equipe = context.equipas[escolha];
 
                 Console.Write("Novo Nome: ");
                 equipe.NomeEquipa = Console.ReadLine();
