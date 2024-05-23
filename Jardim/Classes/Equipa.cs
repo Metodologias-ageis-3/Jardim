@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Admin_Jardim.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Admin_Jardim
 {
@@ -10,39 +9,20 @@ namespace Admin_Jardim
     {
         private string id = Guid.NewGuid().ToString();
         private string nomeEquipa;
-        private Dictionary<string, string> integrantes;
+        private List<Funcionario> integrantes;
 
-        public static List<(string Id, string Nome)> PessoasPredefinidas = new List<(string, string)>
-        {
-            ("1", "João Silva"),
-            ("2", "Maria Souza"),
-            ("3", "Pedro Santos"),
-            ("4", "Ana Oliveira"),
-            ("5", "José Pereira"),
-            ("6", "Carla Almeida"),
-            ("7", "Antônio Lima"),
-            ("8", "Mariana Ferreira"),
-            ("9", "Carlos Rocha")
-        };
-
-        public Equipa(string nomeEquipa, List<(string, string)> integrantesSelecionados)
+        public Equipa(string nomeEquipa, List<Funcionario> integrantesSelecionados)
         {
             NomeEquipa = nomeEquipa;
-            Integrantes = new Dictionary<string, string>();
-
-            if (integrantesSelecionados != null)
-            {
-                foreach (var (id, nome) in integrantesSelecionados)
-                {
-                    AdicionarIntegrante(id, nome);
-                }
-            }
+            Integrantes = integrantesSelecionados ?? new List<Funcionario>();
 
             if (Integrantes.Count == 0)
             {
                 throw new ArgumentException("A equipe deve ter pelo menos um integrante.");
             }
         }
+
+        public static object PessoasPredefinidas { get; internal set; }
 
         public string Id
         {
@@ -72,39 +52,34 @@ namespace Admin_Jardim
             }
         }
 
-        public Dictionary<string, string> Integrantes
+        public List<Funcionario> Integrantes
         {
             get { return integrantes; }
             private set { integrantes = value; }
         }
 
-        public void AdicionarIntegrante(string id, string nomeIntegrante)
+        public void AdicionarIntegrante(Funcionario funcionario)
         {
-            if (string.IsNullOrEmpty(id))
-                throw new ArgumentException("O ID da pessoa não pode estar vazio.");
-            if (string.IsNullOrEmpty(nomeIntegrante))
-                throw new ArgumentException("O nome da pessoa não pode estar vazio.");
-
-            if (integrantes.ContainsKey(id))
+            if (funcionario == null)
+                throw new ArgumentException("O funcionário não pode ser nulo.");
+            if (Integrantes.Any(f => f.Id == funcionario.Id))
                 throw new ArgumentException("Já existe uma pessoa com esse ID na equipe.");
 
-            integrantes[id] = nomeIntegrante;
+            Integrantes.Add(funcionario);
         }
 
         public void RemoverIntegrante(string id)
         {
-            if (string.IsNullOrEmpty(id))
-                throw new ArgumentException("O ID da pessoa não pode estar vazio.");
-
-            if (!integrantes.ContainsKey(id))
+            var funcionario = Integrantes.FirstOrDefault(f => f.Id == id);
+            if (funcionario == null)
                 throw new ArgumentException("Não existe uma pessoa com esse ID na equipe.");
 
-            integrantes.Remove(id);
+            Integrantes.Remove(funcionario);
         }
 
         public override string ToString()
         {
-            string integrantesInfo = string.Join(", ", Integrantes.Select(i => $"ID: {i.Key}, Nome: {i.Value}"));
+            string integrantesInfo = string.Join(", ", Integrantes.Select(i => $"ID: {i.Id}, Nome: {i.Nome}"));
             return $"Equipe: {NomeEquipa}\nIdentificador: {Id}\nIntegrantes: {integrantesInfo}";
         }
     }
