@@ -151,7 +151,6 @@ namespace Admin_Jardim
 
         public void ValidarVistoria()
         {
-            Console.WriteLine("Ola");
             if (this.Arvore == null)
             {
                 throw new InvalidOperationException("A árvore da vistoria não pode ser nula.");
