@@ -182,7 +182,7 @@ namespace Admin_Jardim
 
         public override string ToString()
         {
-            string equipeInfo = EquipeVistoria != null ? EquipeVistoria.NomeEquipa : "N/A";
+            string equipeInfo = equipa != null ? equipa.NomeEquipa : "N/A";
 
             return
                   "---\n"
