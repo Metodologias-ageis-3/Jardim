@@ -194,6 +194,10 @@ namespace Admin_Jardim
             AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(vistoria.Arvore);
         }
 
+        public List<Vistoria> ListaVistoria(){
+            return new List<Vistoria>(vistorias);
+        }
+
         public void EditarArvore(Arvore arvore, Arvore arvoreNova) { 
             if(arvore.Canteiro != null)
             {
@@ -228,6 +232,10 @@ namespace Admin_Jardim
 
         public void DeleteVistoria(Vistoria vistoria)
         {
+            if (!vistorias.Contains(vistoria))
+            {
+                throw new ArgumentException("Essa opcao nao existe, escolha novamente.");
+            }
             vistoria.Arvore.Vistorias.Remove(vistoria);
             vistorias.Remove(vistoria);
             AtualizaDadosArvoreComBaseNaVistoriaMaisRecente(vistoria.Arvore);
