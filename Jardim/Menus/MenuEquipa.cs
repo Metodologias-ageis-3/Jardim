@@ -146,11 +146,16 @@ namespace Admin_Jardim
                 Console.WriteLine("Escolha a equipe para editar:");
                 for (int i = 0; i < context.equipas.Count; i++)
                 {
-                    Console.WriteLine($"{i}. {context.equipas[i].NomeEquipa}");
+                    Console.WriteLine($"{i + 1}. {context.equipas[i].NomeEquipa}");
                 }
 
                 int escolha = int.Parse(Console.ReadLine());
-                Equipa equipe = context.equipas[escolha];
+                if (escolha < 1 || escolha > context.equipas.Count)
+                {
+                    throw new ArgumentException("Escolha inválida.");
+                }
+
+                Equipa equipe = context.equipas[escolha - 1];
 
                 Console.WriteLine($"Equipe selecionada: {equipe.NomeEquipa}");
 
@@ -207,6 +212,12 @@ namespace Admin_Jardim
                                 {
                                     Console.WriteLine($"O integrante {pessoaSelecionada.Nome} já faz parte da equipe.");
                                 }
+
+                                if (equipe.Integrantes.Count >= 3)
+                                {
+                                    Console.WriteLine("A equipe atingiu o máximo de integrantes permitidos (3).");
+                                    break;
+                                }
                             }
                             else
                             {
@@ -253,6 +264,7 @@ namespace Admin_Jardim
                 Console.WriteLine(ex.Message);
             }
         }
+
 
     }
 }
